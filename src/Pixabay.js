@@ -81,7 +81,7 @@ export default function Main(){
 }
 
 export function SendFetch(){
-    const KEY = '21461423-8db030276af347c25b0159b67';
+    const KEY = '  <SOME PRIVATE KEY>  ';
     const [state, setState] = useState();
     const [isLoading, setIsloading] = useState(true);
     const [isError, setError] = useState(false);
