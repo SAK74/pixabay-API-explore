@@ -9,8 +9,6 @@ export default function Main(){
     const imageType = currentState.imageType;
     const orientation = currentState.orientation;
     const category = currentState.category;
-    console.log(currentState);
-    console.log('main');
     const [input, setInput] = useState(search);
 
     const dispatch = useDispatch();
@@ -98,7 +96,6 @@ export function SendFetch(){
 
     useEffect(() => {
         fetch(`https://pixabay.com/api/?key=${KEY}&page=${page}${search?'&q='+search:''}&per_page=${perPage}&image_type=${imageType}&orientation=${orientation}&category=${category}`)
-            // .then(resp => console.log(resp.url))
             .then(resp => resp.json())
             .then(json => {
                 setState(json);
@@ -112,9 +109,7 @@ export function SendFetch(){
     if (isLoading) return <div>Loading...</div>
     else if (isError) return <div>{isError}</div>;
     
-    console.log(state);
     const hits = state.hits;
-    console.log(hits);
 
     const handleMouseOver = ev => ev.target.nextSibling.style.opacity = '.5';
     const handleMouseOut = ev => ev.target.nextSibling.style.opacity = '0';
@@ -149,7 +144,6 @@ export function SendFetch(){
             <div className = 'container'>
                 {images}
             </div>
-            {/* <br/> */}
              Ilość wyników na stronie: 
             <span className = 'pages' onClick = {changeStyle}>
                 <span style = {styledSpan(20)}> 20 </span>
@@ -163,8 +157,6 @@ export function SendFetch(){
                 <button onClick = {()=> dispatch(changePage(pages===1 ? pages : page+1))}>{'>'}</button>
                 <button onClick = {()=> dispatch(changePage(pages))}>{'>>'}</button>
             </span>
-            
-            
         </>
     );
 }
