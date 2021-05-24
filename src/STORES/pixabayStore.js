@@ -1,5 +1,4 @@
 import { createSlice, createStore } from "@reduxjs/toolkit";
-// import {composeWithDevTools} from 'redux-devtools-extension';
 
 const initialState = {
     page : 1,
