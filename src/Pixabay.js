@@ -75,7 +75,7 @@ export default function Main(){
 }
 
 export function SendFetch(){
-    const KEY = '21461423-8db030276af347c25b0159b67';
+    const KEY = '  <SOME PRIVATE KEY>  ';
     const [state, setState] = useState();
     const [isLoading, setIsloading] = useState(true);
     const [isError, setError] = useState(false);
@@ -87,7 +87,6 @@ export function SendFetch(){
 
     useEffect(() => {
         fetch(`https://pixabay.com/api/?key=${KEY}&page=${page}${search?'&q='+search:''}&per_page=${perPage}&image_type=${imageType}&orientation=${orientation}&category=${category}`)
-            // .then(resp => console.log(resp.url))
             .then(resp => resp.json())
             .then(json => {
                 setState(json);
