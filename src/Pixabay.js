@@ -4,15 +4,9 @@ import { changeCategory, changeImagetype, changeOrientation, changePage, changeS
 import './pixa.css';
 
 export default function Main(){
-    const currentState = useSelector(state => state);
-    const search = currentState.search;
-    const imageType = currentState.imageType;
-    const orientation = currentState.orientation;
-    const category = currentState.category;
-    console.log(currentState);
-    console.log('main');
-    const [input, setInput] = useState(search);
 
+    const {search, imageType, orientation, category} = useSelector(state => state);
+    const [input, setInput] = useState(search);
     const dispatch = useDispatch();
 
     const handleChange = ev => {
@@ -31,7 +25,7 @@ export default function Main(){
         <>
             <div className = "header">
                 <form onSubmit = {handleSubmit}>
-                    <img onClick = {handleSubmit} src = "/PNG/search1.png"/>
+                    <img onClick = {handleSubmit} src = "/PNG/search1.png" alt = "search"/>
                     <input placeholder = "szukane słowa" onInput = {handleChange} id = "input" 
                       value = {input} size = "12" autoComplete = 'off'/>
                                      
@@ -88,13 +82,8 @@ export function SendFetch(){
     const [perPage, setPerpage] = useState(20);
 
     const dispatch = useDispatch();
-    const currentState = useSelector(state => state);
-    const search = currentState.search;
-    const imageType = currentState.imageType;
-    const orientation = currentState.orientation;
-    const category = currentState.category;
-    const page = currentState.page;
-    console.log(currentState);
+ 
+    const {search, imageType, orientation, category, page} = useSelector(state => state);
 
     useEffect(() => {
         fetch(`https://pixabay.com/api/?key=${KEY}&page=${page}${search?'&q='+search:''}&per_page=${perPage}&image_type=${imageType}&orientation=${orientation}&category=${category}`)
@@ -108,13 +97,12 @@ export function SendFetch(){
                 setError(err.message);
                 setIsloading(false);
             })
-    }, [currentState, perPage]);
+    }, [search, imageType, orientation, category, page, perPage]);
     if (isLoading) return <div>Loading...</div>
     else if (isError) return <div>{isError}</div>;
     
-    console.log(state);
     const hits = state.hits;
-    console.log(hits);
+    // console.log(hits);
 
     const handleMouseOver = ev => ev.target.nextSibling.style.opacity = '.5';
     const handleMouseOut = ev => ev.target.nextSibling.style.opacity = '0';
@@ -132,10 +120,10 @@ export function SendFetch(){
             <div className = 'infoLine' 
              style = {{width: value.previewWidth-4,
              top: (value.previewWidth<126 || value.views.toString().length + value.likes.toString().length > 9) ? -48 : -28}}>
-                <img src = '\PNG\like.png'/>
+                <img src = '\PNG\like.png' alt = "likes"/>
                 {value.likes}
                 <span>
-                    <img src = '\PNG\eyes-icon.png'/>                   
+                    <img src = '\PNG\eyes-icon.png' alt = "views"/>                   
                     <span>{value.views}</span>
                 </span>               
             </div>
@@ -143,28 +131,29 @@ export function SendFetch(){
     ));
     const pages = (state.totalHits%perPage) ? Math.floor(state.totalHits/perPage)+1 : state.totalHits/perPage;
     const styledSpan = id => id === perPage ? {color:'red', fontWeight: "bold", fontSize: '1.2em'} : null;
-    const changeStyle = ev => setPerpage(Number(ev.target.innerText));
+    const changePerPage = ev => setPerpage(Number(ev.target.innerText));
+    const handePagePlus = () => {
+        if (pages !== 1 && page !== pages) dispatch(changePage(page + 1));
+    }
     return (
         <>
             <div className = 'container'>
                 {images}
             </div>
-            {/* <br/> */}
-             Ilość wyników na stronie: 
-            <span className = 'pages' onClick = {changeStyle}>
+            <div>Mamy <span style = {{fontWeight:'bold'}}>{state.totalHits}</span> wyników</div>
+             &nbsp;Ilość wyników na stronie: 
+            <span className = 'pages' onClick = {changePerPage}>
                 <span style = {styledSpan(20)}> 20 </span>
                 <span style = {styledSpan(40)}> 40 </span>
                 <span style = {styledSpan(60)}> 60 </span>
             </span>
             <span className = 'navPages'>
                 <button onClick = {()=> dispatch(resetPage())}>{'<<'}</button>
-                <button onClick = {()=> dispatch(changePage(page===1 ? 1 : page-1))}>{' < '}</button>
+                <button onClick = {()=> dispatch(changePage(page===1 ? 1 : page-1))}>{'<'}</button>
                 <span> page {page} / {pages}</span>
-                <button onClick = {()=> dispatch(changePage(pages===1 ? pages : page+1))}>{'>'}</button>
+                <button onClick = {handePagePlus}>{'>'}</button>
                 <button onClick = {()=> dispatch(changePage(pages))}>{'>>'}</button>
-            </span>
-            
-            
+            </span>            
         </>
     );
 }
