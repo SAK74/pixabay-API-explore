@@ -1,0 +1,9 @@
+button{
+  width: 2cm;
+  height: auto;
+  flex: 1;
+  align-self: center;
+}
+div{
+  flex: content;
+}

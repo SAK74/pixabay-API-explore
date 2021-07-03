@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <!-- <input oninput="readData()" id = 'input' type="date"/>
+        <canvas id = 'canvas'></canvas> -->
+        <script>
+            // const canvas = document.getElementById('canvas');
+            // const ctx = canvas.getContext("2d");
+            // ctx.lineWidth = 10;     
+            // ctx.strokeStyle = "blue";
+  
+            // ctx.moveTo(0, 20);
+            // ctx.lineTo(50, 80);
+            // ctx.stroke();
+
+            // ctx.moveTo(0, 20);
+            // ctx.lineTo(50, 80);
+            // ctx.stroke();
+
+            // fetch('url', {
+            //     method: 'POST',
+            //     // headers: 
+            //     // body: 
+            // });
+
+            // throw "bład";
+            // function any(){
+            //     return new Error("asdf");
+            // }
+            // try {
+            //     console.log(any().message);
+            //     any()
+            // }catch(err) {console.log(err.message)}
+            
+            // class Klasa{
+            //     constructor (one, two){
+            //         this.one = one;
+            //         this.two = two;
+            //     }
+            // }
+            // Klasa.prototype.three = "3";
+            // const obj = new Klasa(1,2);
+            // console.log(obj.three);
+
+
+            const obj1 = {one: 1, two: 2};
+            const {one: jeden, two: dwa} = obj1;
+            console.log(jeden, dwa);
+            // obj1.three = '3';
+            // console.log(obj1.keys());
+            // for (const x in obj1) console.log(x, obj1[x]);
+
+            
+            // console.log("String".split("").reverse().join(""));
+
+            // const obj2 = {three: 3, four: 4};
+            // const obj3 = { ...obj1, ...obj2};
+            // console.log(obj3);
+            // const {one, ...rest} = obj3;
+            // console.log(one, rest);
+
+            // const arr = ['jhk',3,5];
+            // const newArr = ['new1', 'new2'];
+            // arr.push(...newArr);
+            // console.log(...newArr);
+            // const [first, ...last] = arr;
+            // console.log(first, last);
+            // const [first, ...second] = arr;
+            // // const obj = {[first]: "value"};
+            // const obj = {};
+            // obj[first] = second;
+            // console.log(first, second, obj);
+
+            // function make (arr1, arr2){
+            //     const res = {};
+            //     arr1.forEach((element, index) => {
+            //         if (arr2[index]) res[element] = arr2[index];
+            //     });
+            //     return Object.entries(res);
+            // }
+            // console.log(make(arr, newArr));
+
+            // const arra = [[2, [4, [44,5,6]]], [4,5,6], [[2,4], 4], 5];
+            // console.log(arra);
+            // const newArr = [];
+            // newArr.push(...arra[0]);
+            // newArr.push(...arra[2]);
+            // console.log(newArr);
+            
+            // function flatten(arr){
+            //     const result = [];
+            //     function spread(a){
+            //         for (let i = 0; i < a.length; i++){
+            //         if (Array.isArray(a[i])) spread(a[i])
+            //         else result.push(a[i]);
+            //         }
+            //     }
+            //     spread(arr);
+            //     return result;
+            // }
+            // console.log(flatten(arra));
+
+            // const arr1 = ['b', 3, 4, 76, 'c']; arr2 = ['a', 'b', 4, 76, 21, 'e'];
+            // const temp = arr1.filter(elem1 => arr2.every(elem2 => elem2 !== elem1));
+            // const result = temp.concat(arr2.filter(elem2 => arr1.every(elem1 => elem1 !== elem2)));
+            // console.log(result);
+            // arr1.forEach(elem1 => {
+            //     if (arr2.find(elem2 => elem2 === elem1)) result.push(elem1);
+            // });
+            // console.log(arr1, arr2, result);
+
+            // const all = arr1.concat(arr2);
+            // console.log(all);
+            // const x = all.filter(elem => {
+            //     all.every(val => val === elem)
+            // });
+            // console.log(x);
+
+            // function printAbout(name = "Ala", ...other) {
+            //     console.log("To jest " + name);
+            //     console.log(other);
+
+            //     if (other.length) {
+            //         console.log(`${name} ma zwierzaki: ${other.join()}`);
+            //     }
+            // }
+            // printAbout("Marcin", "pies", "kot"); //To jest Marcin. Marcin ma zwierzaki: pies,kot
+            // printAbout(); //To jest Ala
+
+            // function formatText(txt, ...vars) {
+            //     console.log(txt, vars);
+            // }
+
+            // const txt = formatText`Przykładowy tekst bardzo fajny ${"bardzooo"} koniec i ma ${68} znaków`;
+            // // console.log(txt);
+            // const markWithStrong = (parts, ...vars) => {
+            //     let str = "";
+            //     parts.forEach((el, i) => {
+            //         str += el;
+            //         if (vars[i]) str += `<strong>${vars[i]}</strong>`;
+            //     });
+            //     return str;
+            // }
+            // const name = "Marcin";
+            // const dog = "Szamson";
+            // const text = markWithStrong`Mam na imię ${name} a mój pies to ${dog}`;
+            // console.log(text);
+
+            const keys = ['a', 'b', 'c', 'd'];
+            const obj = { a: { b: { c: { d: '23' } } } };
+            // console.log(obj);
+            // const b = { ...obj, a: { ...obj.a, z: 12}};
+            const [latest] = keys;
+            const entryKeys = keys.entries();
+            for (const x of entryKeys) console.log(x);
+            console.log(entryKeys);
+
+            const xx = {...obj};
+            console.log(xx);
+            // let res = obj[keys[0]];
+            // for (let i = 1; i < keys.length; i++) res = res[keys[i]];
+                
+            // const myMap = new Map([[1, 1], ['two', 2]]);
+            // myMap.set('three', 3);
+            // myMap.set({one: 1}, {xxx: "coś tam"});
+            // console.log(myMap.entries());
+            // console.log(myMap.get('two'));
+
+            // const set = new Set("text");
+            // set.add("text");
+            // console.log(set.keys(), set.entries());
+            // for (const x of set) console.log(x);
+
+            let ob = {one: 1};
+            const weak = new WeakMap();
+            weak.set(ob, "asd");
+            // const tab = weak;
+            ob = null;
+            console.log(weak);
+
+            let file1 = { name: "file1", ext: "jpg" };
+            let file2 = { name: "file2", ext: "png" };
+            let file3 = { name: "file3", ext: "gif" };
+
+            // const readCount = new WeakMap();
+
+            // function readFile(file) {
+            //     if (readCount.has(file)) {
+            //         const count = readCount.get(file) + 1;
+            //         readCount.set(file, count);
+            //     } else {
+            //         readCount.set(file, 1);
+            //     }
+            // }
+
+            // readFile(file1);
+            // readFile(file1);
+            // readFile(file1);
+            // readFile(file2);
+            // readFile(file3);
+
+            // console.log(readCount); //{{...file1...} => 3, {...file2...} => 1, {...file3...} => 1}
+
+            // file2 = null;
+            // file3 = null;
+
+            // console.log(readCount); //{{...file1...} => 3}
+
+            const list = new WeakSet();
+            list.add(file1);
+            list.add(file2);
+            list.add(file3);
+            console.log(list);
+            // file2 = null;
+            console.log(list.has(file2));
+
+//--------------------  SYMBOL ------------------------------------
+
+            // let sym = Symbol('a');
+            // const ob1 = {one: 1, [sym]: "coś tajnego"};
+            // sym = Symbol();
+            // ob1[sym] = "jeszcze coś";
+            // console.log(ob1);
+            // const symbols = Object.getOwnPropertySymbols(ob1);
+
+            // console.log(symbols);
+            // console.log(ob1[symbols[0]]);
+
+            // class Car {
+            //     constructor(){}
+            // }
+            // const auto = new Car();
+            // console.log(auto instanceof Car);
+
+            // console.log("res: ", res);
+            // let d = obj[keys[0]];
+            // d = d[keys[1]];
+            // d = d[keys[2]];
+
+            // console.log(d);
+            // const temp = {};
+            // function some (a){
+            //     for (const x in a){
+            //         // console.log(x, a[x]);
+            //         // console.log(typeof a[x]);
+            //         if (typeof a[x] === "object") {
+                        
+            //             some(a[x]);
+            //         } else {
+            //             temp[x] = a[x];
+            //             console.log(temp);
+            //         };
+            //     }
+            //     return temp;
+            // }
+
+            const add = (function () {
+            let counter = 0;
+            return function () {counter += 1; return counter}
+            })();
+            
+            const show = (() => {
+                const someInsideData = {name: '', pasword: ''};
+                return (name, pass) => {
+                    someInsideData.name = name;
+                    someInsideData.pasword = pass;
+                    return someInsideData;
+                };
+            })();
+            console.log(show('Janek', "hidden"));
+
+            // const x =( () => {
+            //     let c = 1;
+            //     return (amount) => {
+            //         c += amount;
+            //         return c;
+            //     };
+            // })();
+            // console.log(x(6));
+
+            // const b = Object.values(a);
+            // const result = [];
+            // console.log("res: ", some(obj));
+            // const tempRes = some(obj);
+            // const {a, c, d} = obj;
+            // console.log(a,c, d);
+            
+
+            // const obj1 = { a: 'b', c: 'd' };
+            // const obj2 = { c: 'd', a: 'b' };
+            // const temp = Object.values(obj1);
+            // console.log(temp.length);
+            // function compare (obj1, obj2){
+            //     if (Object.values(obj1).length !== Object.values(obj2).length) return false;
+            //     for (const x in obj1) {
+            //         if(obj1[x] !== obj2[x] ) return false;
+            //     }
+            //     return true;
+            // }
+            // console.log(compare(obj1, obj2));
+
+            // const arr = ['color', 'size'];
+            // const obj = { color: 'Blue', id: '22', size: 'xl' };
+            // arr.forEach(elem => delete(obj[elem]));
+            // console.log(obj);
+
+            // const c = arr.map(elem => {
+            //     console.log (...elem);
+                // const z = (...elem);
+                // return z;
+            // });
+
+            // const o = {};
+            // b.forEach(element => {
+            //     const [name, value] = element;
+            //     o[name] = value;
+            // });
+            // console.log(o);
+
+
+            // function spread2(arr){
+            //     while (arr.some(elem => Array.isArray(elem))) {
+            //         arr = arr.map(elem => {
+            //             Array.isArray(elem) ?  ( ...elem) : elem;
+            //             // else return elem;
+            //         });
+            //     }
+            //     return arr;
+            // }
+
+            // console.log(spread2(arra));
+            
+            // const classNames = require('classnames');
+            // console.log(classNames({}))
+
+            //  async function tryFetch() {
+            //     const response = await fetch('http://localhost:3000/posts/'
+            //     ,   {
+            //             method: 'POST',
+            //             body: JSON.stringify({
+            //                 date: new Date().toISOString(),
+            //                 title: "nowy tytuł",
+            //                 content: "nowy zawart...",
+            //                 author: "Nowicjusz"
+            //             }),
+            //             headers: {
+            //                 'Content-type': 'application/json; charset=UTF-8'
+            //             }
+            //         }
+            //     );
+            //     // console.log(fetch(URL));
+            //     console.log(response);
+            //     console.log(response.headers);
+
+            //     // const json = await response.json();
+            //     console.log(await response.json());
+            // }
+            // tryFetch();
+
+            // console.log(json);
+
+                // fetch('https://jsonplaceholder.typicode.com/users', {
+                //     method: 'POST',
+                //     body: JSON.stringify({
+                        
+                //         name: "Sergio",
+                //         // id: 11,
+                //         username: "Scorpion"
+                //     }),
+                //     headers: {
+                //         'Content-type': 'aplication/json; charset=UTF-8'
+                //     }
+                // })
+                // .then(response => 
+                //     response.json()
+                // )
+                // .then(json => {
+                //     console.log(json);
+                // }) 
+ 
+                /* fetch('https://jsonplaceholder.typicode.com/osts?id=48')
+                .then(response => 
+                    response.json()
+                    // console.log(response)
+                )
+                .then(json => {
+                    // console.log('read');
+                        console.log(json);
+
+                    })
+                .catch(err => console.log(err.message)); */
+                        
+                    
+                // (err => console.log(err.message))) 
+                /* fetch('https://jsonplaceholder.typicode.com/posts/1', {
+                    method: 'DELETE'
+                })
+                .then(response => console.log(response))
+                // .then(json => console.log(json))
+                .catch(error => console.log(error)) */
+
+                //eb66c1ddec545186135bf5be2da4cec5  // mój
+                //dba3cbbbe22de845daba54e9ad2c2c0b
+                /* fetch('https://api.openweathermap.org/data/2.5/weather?q=Częstochowa&appid=eb66c1ddec545186135bf5be2da4cec5&units=metric')
+                .then(response => response.json())
+                .then(res => console.log(res)); */
+                //http://api.nbp.pl/api/exchangerates/rates/{table}/{code}/
+
+                //fetch('http://api.nbp.pl/api/exchangerates/tables/B/')
+
+                // function readData() {
+                //     //alert();
+                //     const anyData = document.getElementById('input').value;
+                //     console.log(anyData);
+                //     sendFetch(anyData);
+                // }
+                // const data = new Date().toISOString().substr(0, 10);
+                // console.log(data);
+                // function sendFetch(startData){
+                //     fetch(`http://api.nbp.pl/api/exchangerates/rates/C/USD/${startData}/${data}/`, {
+                //     //mode: 'no-cors'
+                //     })
+                //     //fetch('http://api.nbp.pl/api/exchangerates/tables/A/2021-01-15/2021-04-18/')
+                //     .then(rep => rep.json())
+                //     .then(rep => {
+                //         console.log(rep);
+                //         //const tab = rep[0].rates;
+                //         //console.log(tab);
+                //         /* for (let i = 0; i < tab.length; i++){
+                //             if (tab[i].code == 'UAH'){
+                //                 console.log("Kurs dolara: ", tab[i].mid);
+                //                 return;
+                //             }
+                //         } */
+                //         //for (let x in rep[0]) console.log(x, rep[0][x]);
+                //     })
+                //     .catch(err => console.log(err.message));
+                // }
+                // fetch('http://api.nbp.pl/api/exchangerates/tables/C/' + data, {
+                //     //mode: 'no-cors'
+                // })
+                // //fetch('http://api.nbp.pl/api/exchangerates/tables/A/2021-01-15/2021-04-18/')
+                //  .then(rep => rep.json())
+                //  .then(rep => {
+                //      console.log(rep[0]);
+                //     //const tab = rep[0].rates;
+                //     //console.log(tab);
+                //      /* for (let i = 0; i < tab.length; i++){
+                //          if (tab[i].code == 'UAH'){
+                //              console.log("Kurs dolara: ", tab[i].mid);
+                //              return;
+                //          }
+                //      } */
+                //      //for (let x in rep[0]) console.log(x, rep[0][x]);
+                //  })
+                //  .catch(err => console.log(err.message));
+                //  //console.log(new Date().toISOString());
+                // function showApi(obj){
+                //     alert(obj.name);
+                // }
+                // let number = 1;
+                // console.log(number++);
+                // let i =1;
+                // i = i++;
+                // console.log(i);
+
+
+        </script>
+        <!--script src="https://api.openweathermap.org/data/2.5/weather?q=Cz%C4%99stochowa&callback=showApi&appid=eb66c1ddec545186135bf5be2da4cec5&units=metric"></script-->
+    </body>
+</html>

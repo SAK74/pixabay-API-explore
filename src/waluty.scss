@@ -1,0 +1,46 @@
+table{
+    float: left;
+    caption{
+        font: {
+            size: 20px;
+            weight: bolder;
+        }
+        margin-bottom: 8px;
+    }
+    .selected {
+        background-color: palevioletred;
+    }
+    border-collapse: separate;
+}
+canvas {
+    margin-left: 30px;
+    margin-top: 0px;
+    float: left;
+    border: {
+        bottom: 3px solid black;
+        left: 3px solid black;
+    } 
+}
+.graffCapt {
+    :first-child{
+        font-style: normal;
+        color: darken($color: #db7093, $amount: 30);
+
+    }
+    font-size: 1.5em;
+    font-style: italic;
+    text-align: center;
+}
+.max, .min{
+    position: relative;
+    left: 15px;
+}
+.min{
+    top: 340px;
+}
+span:first-child{
+    font-weight: bold;
+}
+span:last-child {
+    color: orangered;
+}

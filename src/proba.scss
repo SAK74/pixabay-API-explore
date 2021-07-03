@@ -1,0 +1,27 @@
+@mixin myStyle($kolor : black, $heigth) {
+    color: $kolor;
+    border-width: $heigth;
+}
+$font-sizes: ("small": 6px, "normal": 18px, "large": 24px);
+$myRgb : rgb(255, 0, 0);
+$myHsl : lighten( hsl(118, 60%, 36%), 50%);
+form{
+    input{
+        color: red;
+    }
+}
+.XXX {
+    margin: map-keys($font-sizes);
+    font-family: map-has-key($font-sizes , normal );
+    color: map-values($font-sizes);
+}
+button{
+    @include myStyle('red' ,map-get($font-sizes, small)); // called myStyle with parametres (red, ...)
+    font: {
+        weight: bold;
+        size: 1.2em;
+    };
+    background: {
+        color: $myHsl;
+    }
+}
