@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { changeCategory, changeImagetype, changeOrientation, changePage, changeSearch, reset, resetPage } from "./STORES/pixabayStore";
-import './pixa.css';
+import { changeCategory, changeImagetype, changeOrientation, changePage, changeSearch, 
+    reset, resetPage } from "./fetchSlice";
+import { resetStatus, selectAllImages, sendFetch } from "./imagesSlice";
+import { Link } from "react-router-dom";
+import '../CSS/pixa.css';
 
-export default function Main(){
+export function Choice(){
 
-    const {search, imageType, orientation, category} = useSelector(state => state);
+    const {search, imageType, orientation, category} = useSelector(state => state.fetch);
     const [input, setInput] = useState(search);
     const dispatch = useDispatch();
 
@@ -15,6 +18,7 @@ export default function Main(){
             case 'orientation' : dispatch(changeOrientation(ev.target.value)); dispatch(resetPage()); break;
             case 'category' : dispatch(changeCategory(ev.target.value)); dispatch(resetPage()); break;
             case 'input' : setInput(ev.target.value); break;
+            default : throw new Error("NIeznany błąd...");
         }
     }
     const handleSubmit = ev => {
@@ -69,66 +73,82 @@ export default function Main(){
                 </form>
             </div>
             
-            <SendFetch/>
+            {/* <SendFetch/> */}
         </>
     );
 }
 
 export function SendFetch(){
-    const KEY = '  <SOME PRIVATE KEY>  ';
-    const [state, setState] = useState();
-    const [isLoading, setIsloading] = useState(true);
-    const [isError, setError] = useState(false);
+    // const KEY = '21461423-8db030276af347c25b0159b67';
+    // const [state, setState] = useState();
+    // const [isLoading, setIsloading] = useState(true);
+    // const [isError, setError] = useState(false);
     const [perPage, setPerpage] = useState(20);
 
     const dispatch = useDispatch();
- 
-    const {search, imageType, orientation, category, page} = useSelector(state => state);
+    const {total, status, error} = useSelector(state => state.images);
+    const hits = useSelector(selectAllImages);
+
+    console.log(hits, status, error);
+    
+    const newSearch = useSelector(state => state.fetch);
+    const {page} = useSelector(state => state.fetch);
 
     useEffect(() => {
-        fetch(`https://pixabay.com/api/?key=${KEY}&page=${page}${search?'&q='+search:''}&per_page=${perPage}&image_type=${imageType}&orientation=${orientation}&category=${category}`)
-            .then(resp => resp.json())
-            .then(json => {
-                setState(json);
-                setIsloading(false); setError(false);
-            })
-            .catch(err => {
-                setError(err.message);
-                setIsloading(false);
-            })
-    }, [search, imageType, orientation, category, page, perPage]);
-    if (isLoading) return <div>Loading...</div>
-    else if (isError) return <div>{isError}</div>;
+        // fetch(`https://pixabay.com/api/?key=${KEY}&page=${page}${search?'&q='+search:''}&per_page=${perPage}&image_type=${imageType}&orientation=${orientation}&category=${category}`)
+        //     .then(resp => {
+        //         console.log(resp);
+        //         dispatch(sendFetch(perPage));
+        //         return resp.json();
+        //     })
+        //     .then(json => {
+        //         setState(json);
+        //         setIsloading(false); setError(false);
+        //     })
+        //     .catch(err => {
+        //         setError(err.message);
+        //         setIsloading(false);
+        //     })
+        if (status === "iddle") dispatch(sendFetch(perPage));
+        
+        // setState(useSelector(state => state.images));
+    }, [perPage, newSearch, dispatch]);
+    if (status === "loading") return <div>Loading...</div>
+    else if (status === "failed") return <h2>{error}</h2>;
     
-    const hits = state.hits;
+    dispatch(resetStatus());
+    // const hits = images.hits;
     // console.log(hits);
 
     const handleMouseOver = ev => ev.target.nextSibling.style.opacity = '.5';
     const handleMouseOut = ev => ev.target.nextSibling.style.opacity = '0';
 
-    if (!state.total) return(
+    if (!total) return(
         <>
             <div>Brak wyników spełniających kryteria wyszukiwania!</div>
             <div>Spróbój ponownie...</div>
         </>
     )
-    const images = hits.map((value, index) => (
+    const renderedImages = hits.map((value, index) => (
         <div className = 'imgField' key = {index}>
-            <img onMouseEnter = {handleMouseOver} onMouseLeave = {handleMouseOut} 
-              className = 'img' src = {value.previewURL} alt = {value.type}/>
-            <div className = 'infoLine' 
-             style = {{width: value.previewWidth-4,
-             top: (value.previewWidth<126 || value.views.toString().length + value.likes.toString().length > 9) ? -48 : -28}}>
-                <img src = '\PNG\like.png' alt = "likes"/>
-                {value.likes}
-                <span>
-                    <img src = '\PNG\eyes-icon.png' alt = "views"/>                   
-                    <span>{value.views}</span>
-                </span>               
-            </div>
+            <Link to = {`/image/${value.id}`}>
+                <img onMouseEnter = {handleMouseOver} onMouseLeave = {handleMouseOut} 
+                  className = 'img' src = {value.previewURL} alt = {value.type}/>
+                <div className = 'infoLine' 
+                  style = {{width: value.previewWidth-4,
+                  top: (value.previewWidth<126 || value.views.toString().length + value.likes.toString().length > 9) ? -48 : -28}}>
+                    <img src = '\PNG\like.png' alt = "likes"/>
+                        {value.likes}
+                    <span>
+                        <img src = '\PNG\eyes-icon.png' alt = "views"/>                   
+                        <span>{value.views}</span>
+                    </span>               
+                </div>
+            </Link>
+            
         </div>
     ));
-    const pages = (state.totalHits%perPage) ? Math.floor(state.totalHits/perPage)+1 : state.totalHits/perPage;
+    const pages = (total%perPage) ? Math.floor(total/perPage)+1 : total/perPage;
     const styledSpan = id => id === perPage ? {color:'red', fontWeight: "bold", fontSize: '1.2em'} : null;
     const changePerPage = ev => setPerpage(Number(ev.target.innerText));
     const handePagePlus = () => {
@@ -137,9 +157,9 @@ export function SendFetch(){
     return (
         <>
             <div className = 'container'>
-                {images}
+                {renderedImages}
             </div>
-            <div>Mamy <span style = {{fontWeight:'bold'}}>{state.totalHits}</span> wyników</div>
+            <div>Mamy <span style = {{fontWeight:'bold'}}>{total}</span> wyników</div>
              &nbsp;Ilość wyników na stronie: 
             <span className = 'pages' onClick = {changePerPage}>
                 <span style = {styledSpan(20)}> 20 </span>
