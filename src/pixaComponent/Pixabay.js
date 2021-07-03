@@ -29,7 +29,7 @@ export function Choice(){
         <>
             <div className = "header">
                 <form onSubmit = {handleSubmit}>
-                    <img onClick = {handleSubmit} src = "/PNG/search1.png" alt = "search"/>
+                    <img onClick = {handleSubmit} src = "\PNG\search.png" alt = "search"/>
                     <input placeholder = "szukane słowa" onInput = {handleChange} id = "input" 
                       value = {input} size = "12" autoComplete = 'off'/>
                                      
@@ -140,7 +140,7 @@ export function SendFetch(){
                     <img src = '\PNG\like.png' alt = "likes"/>
                         {value.likes}
                     <span>
-                        <img src = '\PNG\eyes-icon.png' alt = "views"/>                   
+                        <img src = '\PNG\view.png' alt = "views"/>                   
                         <span>{value.views}</span>
                     </span>               
                 </div>
