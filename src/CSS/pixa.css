@@ -1,0 +1,70 @@
+.header {
+  margin: 15px;
+}
+
+form #input {
+  cursor: initial;
+  font-weight: normal;
+}
+form img {
+  width: 20px;
+  height: 20px;
+  position: relative;
+  top: 15px;
+  margin-right: 0;
+}
+form * {
+  margin: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.container {
+  align-items: center;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}
+
+.imgField {
+  background: transparent;
+}
+.imgField .infoLine {
+  font-size: 0.9Em;
+  display: flex;
+  flex-flow: row wrap;
+  position: relative;
+  padding: 2px;
+  color: white;
+  opacity: 0;
+  transition: 0.6s;
+  background-image: linear-gradient(gray, black);
+}
+.imgField .infoLine img {
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  margin-right: 5px;
+  margin-left: 10px;
+}
+.imgField .infoLine :last-child {
+  display: flex;
+}
+
+.pages, .navPages button {
+  cursor: pointer;
+}
+
+.navPages {
+  float: right;
+}
+.navPages button:hover {
+  font-weight: bold;
+  color: #d45725;
+  box-shadow: #0a3d71 2px 2px 3px 0px;
+}
+
+.navPages * {
+  margin: 5px;
+}/*# sourceMappingURL=pixa.css.map */
