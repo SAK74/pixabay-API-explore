@@ -3,7 +3,6 @@ import { createAsyncThunk, createEntityAdapter, createSlice } from "@reduxjs/too
 export const sendFetch = createAsyncThunk('sendFetch', async (perPage, {getState}) => {
     const KEY = '21461423-8db030276af347c25b0159b67';
     const {search, imageType, orientation, category, page} = getState().fetch;
-    // console.log("getState: ", search, imageType);
     const resp = await fetch(`https://pixabay.com/api/?key=${KEY}&page=${page}${search?'&q='+search:''}&per_page=${perPage}&image_type=${imageType}&orientation=${orientation}&category=${category}`);
     console.log(resp);
     if (!resp.ok) throw new Error("Error... " + resp.status + resp.statusText);

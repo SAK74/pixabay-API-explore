@@ -36,7 +36,7 @@ form {
         padding: 2px;
         color: white;
         opacity: 0;
-        transition: 0.6s;
+        transition: 0.8s;
         background: {
             image: linear-gradient(gray, black);       
         };
@@ -66,4 +66,66 @@ form {
 .navPages * {
     margin: 5px;
 }
+.big-img {
+    float: left;
+    /* text-align: center; */
+    position: relative;
+    top: 20px;
+    left: 20px;
+}
+.line {
+            /* background-image: linear-gradient(gray, black); */
+    opacity: 0.8;
+    position: absolute;
+    top: 0;
+    height: 40px;
+    width: 100%;
+    color: white;
+    font-size: larger;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    img {
+        width: 25px;
+        height: 25px;
+        background-color: white;
 
+    }
+    
+}
+.tag {
+    margin-left: 10px;
+    padding: 0 0 2px 2px;
+
+}
+.tag:hover {
+    background-color: rgba(53, 19, 19, 0.5);
+    cursor: pointer;
+    border-radius: 4px;
+}
+.right {
+    font-size: .8em;
+    margin-right: 10px;
+    display: flex;
+    opacity: .8;}
+.author {
+    img {
+        border-radius: 40%;
+        width: 90px;
+        height: 90px;
+    }
+    float: right;
+    margin: 50px 30px 0 0;
+}
+nav {
+    margin-top: 10px;
+}
+.navi-button {
+        /* margin-top: 10px; */
+        margin: 10px 10px;
+        text-decoration: none;
+        border: thin solid black;
+        padding: 1px 10px;
+        border-radius: 2px;
+        outline: auto;
+}

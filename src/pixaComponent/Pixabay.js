@@ -4,7 +4,6 @@ import { changeCategory, changeImagetype, changeOrientation, changePage, changeS
     reset, resetPage } from "./fetchSlice";
 import { resetStatus, selectAllImages, sendFetch } from "./imagesSlice";
 import { Link } from "react-router-dom";
-import '../CSS/pixa.css';
 
 export function Choice(){
 
@@ -72,17 +71,12 @@ export function Choice(){
                     <input onClick = {()=> {dispatch(reset()); setInput("")}} type = 'reset' value = 'Reset all'/>
                 </form>
             </div>
-            
-            {/* <SendFetch/> */}
         </>
     );
 }
 
 export function SendFetch(){
-    // const KEY = '21461423-8db030276af347c25b0159b67';
-    // const [state, setState] = useState();
-    // const [isLoading, setIsloading] = useState(true);
-    // const [isError, setError] = useState(false);
+
     const [perPage, setPerpage] = useState(20);
 
     const dispatch = useDispatch();
@@ -95,38 +89,22 @@ export function SendFetch(){
     const {page} = useSelector(state => state.fetch);
 
     useEffect(() => {
-        // fetch(`https://pixabay.com/api/?key=${KEY}&page=${page}${search?'&q='+search:''}&per_page=${perPage}&image_type=${imageType}&orientation=${orientation}&category=${category}`)
-        //     .then(resp => {
-        //         console.log(resp);
-        //         dispatch(sendFetch(perPage));
-        //         return resp.json();
-        //     })
-        //     .then(json => {
-        //         setState(json);
-        //         setIsloading(false); setError(false);
-        //     })
-        //     .catch(err => {
-        //         setError(err.message);
-        //         setIsloading(false);
-        //     })
         if (status === "iddle") dispatch(sendFetch(perPage));
-        
-        // setState(useSelector(state => state.images));
     }, [perPage, newSearch, dispatch]);
+
     if (status === "loading") return <div>Loading...</div>
     else if (status === "failed") return <h2>{error}</h2>;
     
     dispatch(resetStatus());
-    // const hits = images.hits;
-    // console.log(hits);
 
-    const handleMouseOver = ev => ev.target.nextSibling.style.opacity = '.5';
-    const handleMouseOut = ev => ev.target.nextSibling.style.opacity = '0';
-
+    const handleMouseOver = ev => ev.target.parentNode.nextSibling.style.opacity = '.5';
+    
+    const handleMouseOut = ev => ev.target.parentNode.nextSibling.style.opacity = '0';
+  
     if (!total) return(
         <>
             <div>Brak wyników spełniających kryteria wyszukiwania!</div>
-            <div>Spróbój ponownie...</div>
+            <div>Spróbój inaczej...</div>
         </>
     )
     const renderedImages = hits.map((value, index) => (
@@ -134,17 +112,17 @@ export function SendFetch(){
             <Link to = {`/image/${value.id}`}>
                 <img onMouseEnter = {handleMouseOver} onMouseLeave = {handleMouseOut} 
                   className = 'img' src = {value.previewURL} alt = {value.type}/>
-                <div className = 'infoLine' 
-                  style = {{width: value.previewWidth-4,
-                  top: (value.previewWidth<126 || value.views.toString().length + value.likes.toString().length > 9) ? -48 : -28}}>
-                    <img src = '\PNG\like.png' alt = "likes"/>
-                        {value.likes}
-                    <span>
-                        <img src = '\PNG\view.png' alt = "views"/>                   
-                        <span>{value.views}</span>
-                    </span>               
-                </div>
-            </Link>
+            </Link>  
+            <div className = 'infoLine' style = {{width: value.previewWidth-4,
+              top: (value.previewWidth<126 || value.views.toString().length + value.likes.toString().length > 9) ? -48 : -28}}>
+                <img src = '\PNG\like.png' alt = "likes"/>
+                    {value.likes}
+                <span>
+                    <img src = '\PNG\view.png' alt = "views"/>                   
+                    <span>{value.views}</span>
+                </span>               
+            </div>
+            
             
         </div>
     ));
