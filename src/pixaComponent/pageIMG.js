@@ -10,7 +10,7 @@ export const  PageIMG = ({match}) => {
     const history = useHistory();
     const dispatch = useDispatch();
     const image = useSelector(state => selectImageById(state, id));
-    console.log(image);
+    console.log(id, image);
     const ref = useRef();
 
     const handleSearchClick = ev => {
@@ -20,9 +20,18 @@ export const  PageIMG = ({match}) => {
     const handleMouseEnter = () => ref.current.style.opacity = '0.8';
 
     const handleMOuseLeave = () => ref.current.style.opacity = "0";
-    
-    const tags = image.tags.split(",").map(item => 
+
+    let tags;
+    if (!image) {
+        history.push('/');
+        return null;
+    }
+    else {
+        tags = image.tags.split(",").map(item => 
       <span onClick = {handleSearchClick} key = {item} className = "tag">{item}&nbsp;</span>);
+    }
+
+    
     
     
     return(

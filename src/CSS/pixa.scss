@@ -1,24 +1,70 @@
-.header {
-    margin: 15px;
+*{
+    box-sizing: border-box;
 }
-form {
-    #input {
-        cursor: initial;
-        font-weight: normal;
-    }
-    img{
-        width: 20px;
-        height: 20px;
+.header {
+    margin: 10px 20px;
+    >form {
         position: relative;
-        top: 15px;
-        margin-right: 0;
+        margin: 5px 40px;
+        img{
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            top: 4px;
+            left: 75px;
+            cursor: pointer;
+        }
+        >input{
+            margin: 0 100px;
+        }
+    } 
+    .options{
+        >*{
+            margin: 10px;
+            font: 14px Arial;
+            border: none;       
+         }
     }
-    * {
-    margin: 10px;
-    border: none;
+}
+.visible{
+    visibility: visible !important;
+}
+.formColor{
+    >*{
+        margin: 5px;
+    }
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    width: 190px;
+    border-radius: 5px;
+    position: absolute;
+    top: 25px;
+    left: -10px;
+    background-color: #5e5e5e;
+    visibility: hidden;
+    >label{
+        color: #ededed;
+        font-weight: initial;
+    }
+}
+.color-container{
+    position: relative;
+    >span{
+        cursor: pointer;
+    }
+}
+.options>select{
     cursor: pointer;
-    font-weight: bold;
-    }
+}
+.color-select{
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto;
+    gap: 5px
+}
+
+.span-container{
+    display: inline-flex;
 }
 .container {
     align-items: center;
@@ -74,7 +120,6 @@ form {
     left: 20px;
 }
 .line {
-            /* background-image: linear-gradient(gray, black); */
     opacity: 0.8;
     position: absolute;
     top: 0;
@@ -89,14 +134,11 @@ form {
         width: 25px;
         height: 25px;
         background-color: white;
-
     }
-    
 }
 .tag {
     margin-left: 10px;
     padding: 0 0 2px 2px;
-
 }
 .tag:hover {
     background-color: rgba(53, 19, 19, 0.5);
@@ -121,7 +163,6 @@ nav {
     margin-top: 10px;
 }
 .navi-button {
-        /* margin-top: 10px; */
         margin: 10px 10px;
         text-decoration: none;
         border: thin solid black;
