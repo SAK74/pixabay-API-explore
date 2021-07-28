@@ -4,14 +4,19 @@
 .header {
     margin: 10px 20px;
     >form {
-        position: relative;
         margin: 5px 40px;
+        display: flex;
+        justify-content: space-between;
+        width: 70%;
+        div:first-child{
+            position: relative;
+        }
         img{
             width: 20px;
             height: 20px;
             position: absolute;
             top: 4px;
-            left: 75px;
+            left: -25px;
             cursor: pointer;
         }
         >input{
@@ -120,7 +125,6 @@
     left: 20px;
 }
 .line {
-    opacity: 0.8;
     position: absolute;
     top: 0;
     height: 40px;
@@ -130,11 +134,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    img {
-        width: 25px;
-        height: 25px;
-        background-color: white;
-    }
+    
 }
 .tag {
     margin-left: 10px;
@@ -149,7 +149,12 @@
     font-size: .8em;
     margin-right: 10px;
     display: flex;
-    opacity: .8;}
+    img {
+        width: 25px;
+        height: 25px;
+        background-color: white;
+    }
+}
 .author {
     img {
         border-radius: 40%;

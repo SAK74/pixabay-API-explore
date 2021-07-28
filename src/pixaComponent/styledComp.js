@@ -61,3 +61,15 @@ export const GoButton = styled(Button).attrs(() => ({type: "submit"}))`
     height: 30px;
     border-radius: 20px;
 `;
+
+export const DivIMGPage = styled.div`
+    color: ${({transparent}) => transparent ? 'initial' : "white"};
+    position: absolute;
+    top: 0;
+    height: 40px;
+    width: 100%;
+    font-size: larger;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+`;

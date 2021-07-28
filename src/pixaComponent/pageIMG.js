@@ -4,21 +4,23 @@ import { useHistory } from "react-router-dom";
 import { changeSearch } from "./fetchSlice";
 import { selectImageById } from "./imagesSlice";
 import { Link } from "react-router-dom";
+import { DivIMGPage } from "./styledComp";
 
 export const  PageIMG = ({match}) => {
     const {id} = match.params;
     const history = useHistory();
     const dispatch = useDispatch();
     const image = useSelector(state => selectImageById(state, id));
+    const {colors} = useSelector(state => state.fetch);
     // console.log(id, image);
     const ref = useRef();
 
+    const isTransparent = colors.split(",").some(val => val === "transparent");
     const handleSearchClick = ev => {
         history.push("/");
         dispatch(changeSearch(ev.target.innerText));
     }
     const handleMouseEnter = () => ref.current.style.opacity = '0.8';
-
     const handleMOuseLeave = () => ref.current.style.opacity = "0";
 
     let tags;
@@ -42,15 +44,15 @@ export const  PageIMG = ({match}) => {
             <div className = "big-img" onMouseEnter = {handleMouseEnter} onMouseLeave = {handleMOuseLeave}>
 
                 <img src = {image.webformatURL} alt = {image.type}/>
-                <div className = "line" ref = {ref}>
+                <DivIMGPage transparent = {isTransparent} ref = {ref} >
                     <span className = "tags">
                         {tags}
                     </span>
                     <span className = 'right'>
-                        <img src = '\PNG\view.png' alt = "eye"/>&nbsp;{image.views}&nbsp;&nbsp;
+                        <img src = '/PNG/view.png' alt = "eye"/>&nbsp;{image.views}&nbsp;&nbsp;
                         <img src = '/PNG/like.png' alt = "like"/>&nbsp;{image.likes}
                     </span>
-                </div>
+                </DivIMGPage>
                 
             </div>
             <div className = "author">
