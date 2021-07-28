@@ -4,7 +4,7 @@ import { changeCategory, changeImagetype, changeOrientation, changePage, changeS
     reset, resetPage, changeColor } from "./fetchSlice";
 import { selectAllImages, sendFetch } from "./imagesSlice";
 import { Link } from "react-router-dom";
-import { GoButton, Input, Label, Span } from "./styledComp";
+import { ColorLabel, GoButton, Span } from "./styledComp";
 
 
 export function Choice(){
@@ -15,7 +15,6 @@ export function Choice(){
 
     const [colorSelect, setColorSelect] = useState(colors.split(","));
     const colorDisable = colorSelect.some(val => val === "grayscale");
-    // console.log('colorSelect: ', colorSelect);
 
     const handleChange = ev => {
         switch (ev.target.id){
@@ -47,7 +46,6 @@ export function Choice(){
         if(ev.target.checked){
             setColorSelect(prev => {
                 const temp = new Set(prev).add(ev.target.value);
-                console.log( temp);
                 return [...temp];
             });
         } else {
@@ -57,18 +55,19 @@ export function Choice(){
                 return [...temp];
             });
         }
+        
     }
 
+    // console.log(colorSelect);
     const colorMenu = [];
 
     const color = ['red', 'orange', 'yellow', 'green', 'turquoise', 'blue', 'lilac', 'pink', 'white', 'gray', 'black', 'brown'];
     for (let i = 0; i < color.length; i++){
         const isSelected = colorSelect.some(val => val === color[i]);
-         colorMenu[i] = <Label key = {color[i]} color = {color[i]} selected = {isSelected} className = {colorDisable ? "disabled" : ""}>
-            <Input className = {isSelected ? "selected" : ""} value = {color[i]} disabled = {colorDisable}
-              onChange = {handleChecked} checked = {colorSelect.some(val => val === color[i])}/> 
-        </Label>;
+        colorMenu[i] = <ColorLabel key = {color[i]} value = {color[i]} disabled = {colorDisable}
+         checked = {isSelected} onChange = {handleChecked}/>;
     }
+
     const spanColor = colors.split(",").map(elem => !elem ? null : <Span key = {elem} color = {elem}></Span>);
     const contentColor = (!colors) ? `Color` : <span className = "span-container">{spanColor}</span>;
 
@@ -145,7 +144,7 @@ export function Choice(){
                                          handleChecked(ev);
                                          if(isChecked) ev.target.parentNode.nextSibling.classList.add("hidden")
                                          else ev.target.parentNode.nextSibling.classList.remove("hidden");
-                                        }} checked = {colorSelect.some(val => val === "grayscale")}
+                                        }} checked = {colorDisable}
                                      />
                                     &nbsp;Black & white
                                 </label>
@@ -222,20 +221,23 @@ export function SendFetch(){
             <div className = 'container'>
                 {renderedImages}
             </div>
-            <div>Mamy <span style = {{fontWeight:'bold'}}>{total}</span> wyników</div>
-             &nbsp;Ilość wyników na stronie: 
-            <span className = 'pages' onClick = {changePerPage}>
-                <span style = {styledSpan(20)}> 20 </span>
-                <span style = {styledSpan(40)}> 40 </span>
-                <span style = {styledSpan(60)}> 60 </span>
-            </span>
-            <span className = 'navPages'>
-                <button onClick = {()=> dispatch(resetPage())}>{'<<'}</button>
-                <button onClick = {()=> dispatch(changePage(page===1 ? 1 : page-1))}>{'<'}</button>
-                <span> page {page} / {pages}</span>
-                <button onClick = {handePagePlus}>{'>'}</button>
-                <button onClick = {()=> dispatch(changePage(pages))}>{'>>'}</button>
-            </span>            
+            <div className = "downLine">
+                <div>Mamy <span style = {{fontWeight:'bold'}}>{total}</span> wyników</div>
+                &nbsp;Ilość wyników na stronie: 
+                <span className = 'pages' onClick = {changePerPage}>
+                    <span style = {styledSpan(20)}> 20 </span>
+                    <span style = {styledSpan(40)}> 40 </span>
+                    <span style = {styledSpan(60)}> 60 </span>
+                </span>
+                <span className = 'navPages'>
+                    <button onClick = {()=> dispatch(resetPage())}>{'<<'}</button>
+                    <button onClick = {()=> dispatch(changePage(page===1 ? 1 : page-1))}>{'<'}</button>
+                    <span> page {page} / {pages}</span>
+                    <button onClick = {handePagePlus}>{'>'}</button>
+                    <button onClick = {()=> dispatch(changePage(pages))}>{'>>'}</button>
+                </span>  
+            </div>
+                      
         </>
     );
 }

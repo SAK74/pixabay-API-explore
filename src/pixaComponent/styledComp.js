@@ -1,37 +1,42 @@
 import styled from 'styled-components';
 
  export const Label = styled.label`
-    background: ${({color}) => color === "lilac" ? 'purple' : color};
-    // opacity: ${({disabled}) => disabled ? .4 : 1};
-    // cursor: ${({disabled}) => disabled ? 'not-allowed' : 'default'};
-    border: ${({selected}) => selected ? '2px solid #6f6f6f' : 'none'};
-    // content: ${({children}) => children.checked};
+    background: ${({value}) => value === "lilac" ? 'purple' : value};
+    cursor: ${({disabled}) => disabled ? 'not-allowed' : 'default'};
+    border: ${({checked}) => checked ? '2px solid #6f6f6f' : 'none'};
     height: 25px;
     width: 25px;
     border-radius: 50%;
     position: relative;
     overflow: hidden;    
 
-    &.disabled{
+    ${({disabled}) => disabled && `
         opacity: .3;
-    }
+    `}
 `;
 
 export const Input = styled.input.attrs(() => ({type: "checkbox"}))`
     left: -35px;
     position: absolute;
 
-    &.selected:after{
-        content: "";
-        border-radius: 50%;
-        width: 17px;
-        height: 17px;
-        border: 2px solid #dadada;
-        position: absolute;
-        left: 31px;
-        top: -3px;
+    &:after{
+        ${({checked, disabled}) => checked && `
+            content: "";
+            border-radius: 50%;
+            width: 17px;
+            height: 17px;
+            border: 2px solid #dadada;
+            position: absolute;
+            left: 31px;
+            top: -3px;
+            cursor: ${disabled && 'not-allowed'};
+        `}
     }
 `;
+
+export const ColorLabel = props => <Label {...props}>
+    <Input {...props}/>
+</Label>;
 
 export const Span = styled.span`
     background-color: ${({color}) => color === "lilac" ? 'purple' : color};

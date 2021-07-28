@@ -10,7 +10,7 @@ export const  PageIMG = ({match}) => {
     const history = useHistory();
     const dispatch = useDispatch();
     const image = useSelector(state => selectImageById(state, id));
-    console.log(id, image);
+    // console.log(id, image);
     const ref = useRef();
 
     const handleSearchClick = ev => {
@@ -37,7 +37,7 @@ export const  PageIMG = ({match}) => {
     return(
         <>
             <nav>
-                <Link className = "navi-button" to = "/">&#9194; Return to search</Link>
+                <Link className = "navi-button" to = "/">&#10094; &#10094; &#10094; Return to search</Link>
             </nav>
             <div className = "big-img" onMouseEnter = {handleMouseEnter} onMouseLeave = {handleMOuseLeave}>
 
