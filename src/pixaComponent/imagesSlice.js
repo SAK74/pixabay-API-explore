@@ -1,7 +1,7 @@
 import { createAsyncThunk, createEntityAdapter, createSlice } from "@reduxjs/toolkit";
 
 export const sendFetch = createAsyncThunk('sendFetch', async (perPage, {getState}) => {
-    const KEY = '21461423-8db030276af347c25b0159b67';
+    const KEY = '  < MUST ENTRY PRIVATE KEY ACCESSED BY PIXABY >  ';
     const {search, imageType, orientation, category, page, colors} = getState().fetch;
     const resp = await fetch(`https://pixabay.com/api/?key=${KEY}&page=${page}${search?'&q='+search:''}&per_page=${perPage}&image_type=${imageType}&orientation=${orientation}&category=${category}&colors=${colors}`);
     console.log(resp);
