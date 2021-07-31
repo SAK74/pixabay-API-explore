@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { selectAllImages } from "./imagesSlice";
 import { sendFetch } from "./imagesSlice";
 import { changePage, resetPage } from "./fetchSlice";
+import { setLang } from "./LANGUAGES/language";
 
 export function ImagesShow(){
 
@@ -14,8 +15,9 @@ export function ImagesShow(){
 
     console.log(hits, status, error);
     
-    const newSearch = useSelector(state => state.fetch);
-    const {page} = useSelector(state => state.fetch);
+    const newSearch = useSelector(state => state.fetch.params);
+    const {lang} = useSelector(state => state.fetch);
+    const {page} = newSearch;
 
     useEffect(() => {
         if (status === "iddle") dispatch(sendFetch(perPage));
@@ -28,14 +30,13 @@ export function ImagesShow(){
     // dispatch(resetStatus());
 
     const handleMouseOver = ev => ev.target.parentNode.nextSibling.style.opacity = '.5';
-    
     const handleMouseOut = ev => ev.target.parentNode.nextSibling.style.opacity = '0';
   
     if (!total) return(
-        <>
-            <div>Brak wyników spełniających kryteria wyszukiwania!</div>
-            <div>Spróbój inaczej...</div>
-        </>
+        <section className = "no_results">
+            <p>{setLang(lang, 'No matched results for this parameters...')}</p>
+            <p>{setLang(lang, 'please change parameters and try again')}</p>
+        </section>
     )
     const renderedImages = hits.map((value, index) => (
         <div className = 'imgField' key = {index}>
@@ -66,22 +67,21 @@ export function ImagesShow(){
                 {renderedImages}
             </div>
             <div className = "downLine">
-                <div>Mamy <span style = {{fontWeight:'bold'}}>{total}</span> wyników</div>
-                &nbsp;Ilość wyników na stronie: 
+                <div>{setLang(lang, "Matching")} <span style = {{fontWeight:'bold'}}>{total}</span> {setLang(lang, 'result(s)')}</div>
+                &nbsp;{setLang(lang, 'Results in the page:')} 
                 <span className = 'pages' onClick = {changePerPage}>
                     <span style = {styledSpan(20)}> 20 </span>
                     <span style = {styledSpan(40)}> 40 </span>
                     <span style = {styledSpan(60)}> 60 </span>
                 </span>
                 <span className = 'navPages'>
-                    <button onClick = {()=> dispatch(resetPage())}>{'<<'}</button>
-                    <button onClick = {()=> dispatch(changePage(page===1 ? 1 : page-1))}>{'<'}</button>
-                    <span> page {page} / {pages}</span>
+                    <button onClick = {() => dispatch(resetPage())}>{'<<'}</button>
+                    <button onClick = {() => dispatch(changePage(page===1 ? 1 : page-1))}>{'<'}</button>
+                    <span> {setLang(lang, 'page')} {page} / {pages}</span>
                     <button onClick = {handePagePlus}>{'>'}</button>
-                    <button onClick = {()=> dispatch(changePage(pages))}>{'>>'}</button>
+                    <button onClick = {() => dispatch(changePage(pages))}>{'>>'}</button>
                 </span>  
             </div>
-                      
         </>
     );
 }

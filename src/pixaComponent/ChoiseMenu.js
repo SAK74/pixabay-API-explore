@@ -1,12 +1,13 @@
-import { forwardRef, useRef, useState } from "react";
+import { forwardRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { changeCategory, changeImagetype, changeOrientation, changeSearch, reset, changeColor } from "./fetchSlice";
+import { changeCategory, changeImagetype, changeOrientation, changeSearch, reset, changeColor, changeLanguage } from "./fetchSlice";
 import { ColorLabel, GoButton, Span } from "./styledComp";
+import { setLang } from "./LANGUAGES/language";
 
-export const ChoiceMenu = forwardRef((_, refForm) =>
-    {
-
-    const {search, imageType, orientation, category, colors} = useSelector(state => state.fetch);
+export const ChoiceMenu = forwardRef((_, refForm) => {
+    
+    const {search, imageType, orientation, category, colors} = useSelector(state => state.fetch.params);
+    const {lang} = useSelector(state => state.fetch);
     const [input, setInput] = useState(search);
     const dispatch = useDispatch();
 
@@ -19,6 +20,7 @@ export const ChoiceMenu = forwardRef((_, refForm) =>
             case 'orientation' : dispatch(changeOrientation(ev.target.value)); break;
             case 'category' : dispatch(changeCategory(ev.target.value)); break;
             case 'input' : setInput(ev.target.value); break;
+            case 'selLanguage' : dispatch(changeLanguage(ev.target.value)); break;
             default : throw new Error("NIeznany błąd...");
         }
     }
@@ -53,18 +55,17 @@ export const ChoiceMenu = forwardRef((_, refForm) =>
             });
         }
     }
-    // console.log(colorSelect);
-    const colorMenu = [];
 
+    const colorMenu = [];
     const color = ['red', 'orange', 'yellow', 'green', 'turquoise', 'blue', 'lilac', 'pink', 'white', 'gray', 'black', 'brown'];
     for (let i = 0; i < color.length; i++){
         const isSelected = colorSelect.some(val => val === color[i]);
         colorMenu[i] = <ColorLabel key = {color[i]} value = {color[i]} disabled = {colorDisable}
          checked = {isSelected} onChange = {handleChecked}/>;
     }
-
+    
     const spanColor = colors.split(",").map(elem => !elem ? null : <Span key = {elem} color = {elem}></Span>);
-    const contentColor = (!colors) ? `Color` : <span className = "span-container">{spanColor}</span>;
+    const contentColor = (!colors) ? setLang(lang, 'Color') : <span className = "span-container">{spanColor}</span>;
 
     const handleReset = () => {
         setColorSelect([]);
@@ -72,55 +73,46 @@ export const ChoiceMenu = forwardRef((_, refForm) =>
         dispatch(reset());
     }
 
+    const categoriesList = ['backgrounds', 'fashion', 'nature', 'science', 'education', 'feelings', 'health',
+     'people', 'religion', 'places', 'animals', 'industry', 'computer', 'food', 'sports', 'transportation',
+      'travel', 'buildings', 'business', 'music'];
+    const categoriesOptions = [];
+    for (let i = 0; i < categoriesList.length; i++) categoriesOptions.push(
+        <option key = {i} value = {categoriesList[i]}>{setLang(lang, categoriesList[i])}</option>
+    );
+
     return (
-        <div onClick = {(ev) => {
-            if(!refForm.current.contains(ev.target)) refForm.current.classList.remove("visible")
-          }}>
             <div className = "header">
                 <form onSubmit = {handleSubmit}>
                     <div>
                         <img onClick = {handleSubmit} src = "\PNG\search.png" alt = "search"/>
-                        <input placeholder = "szukane słowa" onInput = {handleChange} id = "input" 
+                        <input placeholder = {setLang(lang, "looking words")} onInput = {handleChange} id = "input" 
                         value = {input} size = "12" autoComplete = 'off'/> 
                     </div>
-                    <input onClick = {handleReset} type = 'reset' value = 'Reset all filters'/>
+                    <input onClick = {handleReset} type = 'reset' value = {setLang(lang, 'Reset all filters')}/>
                 </form>
+                <span>{setLang(lang, 'Select language:')} </span>
+                <select id = "selLanguage" onChange = {handleChange} value = {lang}>
+                    <option value = "en">English</option>
+                    <option value = "pl">Polski</option>
+                </select>
                 <div className = "options">
                     <select onChange = {handleChange} value = {imageType}  id = "imageType">
-                        <option value = 'all'>Image type (all)</option>
-                        <option value = 'photo'>photto</option>
-                        <option value = 'illustration'>illustration</option>
-                        <option value = 'vector'>vector</option>
+                        <option value = 'all'>{setLang(lang, 'Image type (all)')}</option>
+                        <option value = 'photo'>{setLang(lang, 'photto')}</option>
+                        <option value = 'illustration'>{setLang(lang, 'illustration')}</option>
+                        <option value = 'vector'>{setLang(lang, 'vector')}</option>
                     </select>
                     
                     <select onChange = {handleChange} id = "orientation" value = {orientation}>
-                        <option value = 'all'>Orientation (all)</option>
-                        <option value = 'horizontal'>horizontal</option>
-                        <option value = 'vertical'>vertical</option>
+                        <option value = 'all'>{setLang(lang, 'Orientation (all)')}</option>
+                        <option value = 'horizontal'>{setLang(lang, 'horizontal')}</option>
+                        <option value = 'vertical'>{setLang(lang, 'vertical')}</option>
                     </select>
 
                     <select onChange = {handleChange} id = "category" value = {category}>
-                    <option value = 'all'>Category (all)</option>
-                        <option value = 'backgrounds'>backgrounds</option>
-                        <option value = 'fashion'>fashion</option>
-                        <option value = 'nature'>nature</option>
-                        <option value = 'science'>science</option>
-                        <option value = 'education'>education</option>
-                        <option value = 'feelings'>feelings</option>
-                        <option value = 'health'>health</option>
-                        <option value = 'people'>people</option>
-                        <option value = 'religion'>religion</option>
-                        <option value = 'places'>places</option>
-                        <option value = 'animals'>animals</option>
-                        <option value = 'industry'>industry</option>
-                        <option value = 'computer'>computer</option>
-                        <option value = 'food'>food</option>
-                        <option value = 'sports'>sports</option>
-                        <option value = 'transportation'>transportation</option>
-                        <option value = 'travel'>travel</option>
-                        <option value = 'buildings'>buildings</option>
-                        <option value = 'business'>business</option>
-                        <option value = 'music'>music</option>
+                        <option value = 'all'>{setLang(lang, 'Category (all)')}</option>
+                        {categoriesOptions}
                     </select>
 
                     <span className = "color-container">
@@ -131,7 +123,7 @@ export const ChoiceMenu = forwardRef((_, refForm) =>
                                 <label>
                                     <input type = "checkbox" value = "transparent" onChange = {handleChecked}
                                       checked = {colorSelect.some(val => val === "transparent")}/>
-                                    &nbsp;Transparent
+                                    &nbsp;{setLang(lang, 'Transparent')}
                                 </label>
                                 <label>
                                     <input type = "checkbox" value = "grayscale" onChange = {ev => {
@@ -141,7 +133,7 @@ export const ChoiceMenu = forwardRef((_, refForm) =>
                                          else ev.target.parentNode.nextSibling.classList.remove("hidden");
                                         }} checked = {colorDisable}
                                      />
-                                    &nbsp;Black & white
+                                    &nbsp;{setLang(lang, 'Black & white')}
                                 </label>
                                 <div className = "color-select">
                                     {colorMenu}
@@ -151,6 +143,5 @@ export const ChoiceMenu = forwardRef((_, refForm) =>
                     </span>
                 </div>
             </div>
-        </div>
     );
 });
