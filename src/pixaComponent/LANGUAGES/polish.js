@@ -1,7 +1,7 @@
 export const polish = new Map([
     ['looking words', 'szukane słowa'],
     ['Reset all filters', 'Wyczyść filtry'],
-    ['Select language:', 'Wybierz język'],
+    ['Select language:', 'Wybierz język:'],
     ['Image type (all)', 'Typ (wszystkie)'],
     ['photto', 'zdjęcia'],
     ['illustration', 'ilustracje'],
@@ -37,7 +37,7 @@ export const polish = new Map([
     ['result(s)', 'wynik(ów)'],
     ['No matched results for this parameters...', 'Brak wyników spełniających kryteria wyszukiwania...'],
     ['please change parameters and try again', 'zmień parametry i spróbuj ponownie'],
-    ['Results in the page:', 'Ilość wyników na stronie'],
+    ['Results in the page:', 'Ilość wyników na stronie:'],
     ['page', 'strona'],
     ['Return to search', 'Powrót do wyników']
 ]);

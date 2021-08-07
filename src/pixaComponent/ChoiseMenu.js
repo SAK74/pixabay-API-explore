@@ -83,19 +83,24 @@ export const ChoiceMenu = forwardRef((_, refForm) => {
 
     return (
             <div className = "header">
-                <form onSubmit = {handleSubmit}>
-                    <div>
-                        <img onClick = {handleSubmit} src = "\PNG\search.png" alt = "search"/>
-                        <input placeholder = {setLang(lang, "looking words")} onInput = {handleChange} id = "input" 
-                        value = {input} size = "12" autoComplete = 'off'/> 
-                    </div>
-                    <input onClick = {handleReset} type = 'reset' value = {setLang(lang, 'Reset all filters')}/>
-                </form>
-                <span>{setLang(lang, 'Select language:')} </span>
-                <select id = "selLanguage" onChange = {handleChange} value = {lang}>
-                    <option value = "en">English</option>
-                    <option value = "pl">Polski</option>
-                </select>
+                <div className = "header_1stLine">
+                    <form onSubmit = {handleSubmit}>
+                        <div>
+                            <img onClick = {handleSubmit} src = "\PNG\search.png" alt = "search"/>
+                            <input placeholder = {setLang(lang, "looking words")} onInput = {handleChange} id = "input" 
+                            value = {input} size = "12" autoComplete = 'off'/> 
+                        </div>
+                        <input onClick = {handleReset} type = 'reset' value = {setLang(lang, 'Reset all filters')}/>
+                    </form>
+                    <span>{setLang(lang, 'Select language:')}&nbsp;
+                        <select id = "selLanguage" onChange = {handleChange} value = {lang}>
+                            <option value = "en">English</option>
+                            <option value = "pl">Polski</option>
+                        </select>
+                    </span> 
+                </div>
+                
+                
                 <div className = "options">
                     <select onChange = {handleChange} value = {imageType}  id = "imageType">
                         <option value = 'all'>{setLang(lang, 'Image type (all)')}</option>

@@ -13,7 +13,7 @@ export const  PageIMG = ({match}) => {
     const dispatch = useDispatch();
     const image = useSelector(state => selectImageById(state, id));
     const {colors} = useSelector(state => state.fetch.params);
-    const lang = useSelector(state => state.lang);
+    const lang = useSelector(state => state.fetch.lang);
     const ref = useRef();
 
     const isTransparent = colors.split(",").some(val => val === "transparent");

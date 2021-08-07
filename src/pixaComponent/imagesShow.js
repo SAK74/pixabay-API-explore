@@ -66,14 +66,17 @@ export function ImagesShow(){
             <div className = 'container'>
                 {renderedImages}
             </div>
-            <div className = "downLine">
-                <div>{setLang(lang, "Matching")} <span style = {{fontWeight:'bold'}}>{total}</span> {setLang(lang, 'result(s)')}</div>
-                &nbsp;{setLang(lang, 'Results in the page:')} 
-                <span className = 'pages' onClick = {changePerPage}>
-                    <span style = {styledSpan(20)}> 20 </span>
-                    <span style = {styledSpan(40)}> 40 </span>
-                    <span style = {styledSpan(60)}> 60 </span>
+            <div>&nbsp;&nbsp;{setLang(lang, "Matching")} <span style = {{fontWeight:'bold'}}>{total}</span> {setLang(lang, 'result(s)')}</div>
+            {total > 20 && <div className = "downLine">
+                <span>
+                    &nbsp;{setLang(lang, 'Results in the page:')} 
+                    <span className = 'pages' onClick = {changePerPage}>
+                        <span style = {styledSpan(20)}> 20 </span>
+                        <span style = {styledSpan(40)}> 40 </span>
+                        <span style = {styledSpan(60)}> 60 </span>
+                    </span> 
                 </span>
+                
                 <span className = 'navPages'>
                     <button onClick = {() => dispatch(resetPage())}>{'<<'}</button>
                     <button onClick = {() => dispatch(changePage(page===1 ? 1 : page-1))}>{'<'}</button>
@@ -81,7 +84,7 @@ export function ImagesShow(){
                     <button onClick = {handePagePlus}>{'>'}</button>
                     <button onClick = {() => dispatch(changePage(pages))}>{'>>'}</button>
                 </span>  
-            </div>
+            </div>}
         </>
     );
 }
