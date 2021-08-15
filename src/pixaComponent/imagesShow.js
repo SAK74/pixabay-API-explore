@@ -29,8 +29,8 @@ export function ImagesShow(){
     
     // dispatch(resetStatus());
 
-    const handleMouseOver = ev => ev.target.parentNode.nextSibling.style.opacity = '.5';
-    const handleMouseOut = ev => ev.target.parentNode.nextSibling.style.opacity = '0';
+    const handleMouseEnter = ev => ev.target.parentNode.nextSibling.style.opacity = '.6';
+    const handleMouseLeave = ev => ev.target.parentNode.nextSibling.style.opacity = '0';
   
     if (!total) return(
         <section className = "no_results">
@@ -41,20 +41,21 @@ export function ImagesShow(){
     const renderedImages = hits.map((value, index) => (
         <div className = 'imgField' key = {index}>
             <Link to = {`/image/${value.id}`}>
-                <img onMouseEnter = {handleMouseOver} onMouseLeave = {handleMouseOut} 
-                  className = 'img' src = {value.previewURL} alt = {value.type}/>
-            </Link>  
-            <div className = 'infoLine' style = {{width: value.previewWidth-4,
-              top: (value.previewWidth<126 || value.views.toString().length + value.likes.toString().length > 9) ? -48 : -28}}>
+                <img src = {value.previewURL} alt = {value.type} 
+                    onMouseEnter = {handleMouseEnter} onMouseLeave = {handleMouseLeave}
+                />
+            </Link>      
+            <div className = 'infoLine'>
                 <img src = '\PNG\like.png' alt = "likes"/>
-                    {value.likes}
+                    &nbsp;{value.likes}&nbsp;&nbsp;
                 <span>
                     <img src = '\PNG\view.png' alt = "views"/>                   
-                    <span>{value.views}</span>
+                    <span>&nbsp;{value.views}</span>
                 </span>               
-            </div>
+            </div>  
         </div>
     ));
+
     const pages = (total%perPage) ? Math.floor(total/perPage)+1 : total/perPage;
     const styledSpan = id => id === perPage ? {color:'red', fontWeight: "bold", fontSize: '1.2em'} : null;
     const changePerPage = ev => setPerpage(Number(ev.target.innerText));

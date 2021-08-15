@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import {ChoiceMenu } from './ChoiseMenu';
 import { PageIMG } from "./pageIMG";
-import '../CSS/pixa.css';
+import '../CSS/pixa.scss';
 import { ImagesShow } from "./imagesShow";
 import { createRef } from "react";
 

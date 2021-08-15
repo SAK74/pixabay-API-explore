@@ -6,6 +6,7 @@ import { selectImageById } from "./imagesSlice";
 import { Link } from "react-router-dom";
 import { DivIMGPage } from "./styledComp";
 import { setLang } from "./LANGUAGES/language";
+import { Button } from "@material-ui/core";
 
 export const  PageIMG = ({match}) => {
     const {id} = match.params;
@@ -37,27 +38,33 @@ export const  PageIMG = ({match}) => {
     return(
         <>
             <nav>
-                <Link className = "navi-button" to = "/">&#10094; &#10094; &#10094; {setLang(lang, 'Return to search')}</Link>
+                <Link className = 'navi-button' to = "/">
+                    <Button color = 'primary' variant = 'outlined'>
+                        &#10094; &#10094; &#10094; {setLang(lang, 'Return to search')}
+                    </Button>
+                </Link>
             </nav>
-
-            <div className = "big-img" onMouseEnter = {handleMouseEnter} onMouseLeave = {handleMOuseLeave}>
-                <img src = {image.webformatURL} alt = {image.type}/>
-                <DivIMGPage transparent = {isTransparent} ref = {ref} >
-                    <span className = "tags">
-                        {tags}
-                    </span>
-                    <span className = 'right'>
-                        <img src = '/PNG/view.png' alt = "eye"/>&nbsp;{image.views}&nbsp;&nbsp;
-                        <img src = '/PNG/like.png' alt = "like"/>&nbsp;{image.likes}
-                    </span>
-                </DivIMGPage>
-            </div>
-            
-            <div className = "author">
-                <a href = {`https://pixabay.com/users/${image.user}-${image.user_id}/`} target = "_blank" rel = "noreferrer">
-                    <img src = {image.userImageURL} alt = 'user'/>
-                    <span>{image.user}</span>
-                </a>
+            <div className = 'bigIMG_container'>
+                <div className = "big-img" onMouseEnter = {handleMouseEnter} onMouseLeave = {handleMOuseLeave}>
+                    <img src = {image.webformatURL} alt = {image.type}/>
+                    <DivIMGPage transparent = {isTransparent} ref = {ref} >
+                        <span>
+                            {tags}
+                        </span>
+                        <span className = 'right'>
+                            <img src = '/PNG/view.png' alt = "eye"/>&nbsp;{image.views}&nbsp;&nbsp;
+                            <img src = '/PNG/like.png' alt = "like"/>&nbsp;{image.likes}
+                        </span>
+                    </DivIMGPage>
+                </div>
+                
+                <div className = "author">
+                    <p>Author:</p>
+                    <a href = {`https://pixabay.com/users/${image.user}-${image.user_id}/`} target = "_blank" rel = "noreferrer">
+                        <img src = {image.userImageURL} alt = 'user'/>
+                        <span>{image.user}</span>
+                    </a>
+                </div>
             </div>
         </>
     )
