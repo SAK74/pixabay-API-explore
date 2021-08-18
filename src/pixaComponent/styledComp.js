@@ -9,7 +9,6 @@ export const Label = styled.label`
     border-radius: 50%;
     position: relative;
     overflow: hidden;    
-
     ${({disabled}) => disabled && `
         opacity: .3;
     `}
@@ -63,7 +62,7 @@ export const GoButton = styled.button.attrs(() => ({type: "submit"}))`
 export const DivIMGPage = styled.div`
     color: ${({transparent}) => transparent ? 'initial' : "white"};
     position: absolute;
-    opacity: 0;
+    opacity: 0.8;
     top: 0;
     height: 40px;
     width: 100%;

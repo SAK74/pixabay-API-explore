@@ -7,7 +7,6 @@ const params = {
     category : 'all',
     imageType : 'all',
     colors: "",
-    lang: 'en'
 };
 const fetchSlice = createSlice({
     name : 'fetch',
