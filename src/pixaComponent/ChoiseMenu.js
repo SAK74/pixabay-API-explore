@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { changeCategory, changeImagetype, changeOrientation, changeSearch, reset, changeColor, changeLanguage } from "./fetchSlice";
 import { ColorLabel, GoButton, Span } from "./styledComp";
 import { setLang } from "./LANGUAGES/language";
+import { Button, FormControlLabel, Checkbox } from "@material-ui/core";
+import TranslateIcon from '@material-ui/icons/Translate';
 
 export const ChoiceMenu = forwardRef((_, refForm) => {
     
@@ -81,6 +83,8 @@ export const ChoiceMenu = forwardRef((_, refForm) => {
         <option key = {i} value = {categoriesList[i]}>{setLang(lang, categoriesList[i])}</option>
     );
 
+    const disabledFilters = Boolean([search, imageType, orientation, category, colors].join(',') === ",all,all,all,");
+
     return (
             <div className = "header">
                 <div className = "header_1stLine">
@@ -90,14 +94,16 @@ export const ChoiceMenu = forwardRef((_, refForm) => {
                             <input placeholder = {setLang(lang, "looking words")} onInput = {handleChange} id = "input" 
                             value = {input} size = "12" autoComplete = 'off'/> 
                         </div>
-                        <input onClick = {handleReset} type = 'reset' value = {setLang(lang, 'Reset all filters')}/>
+                        <span>
+                            <TranslateIcon/>
+                            {/* {setLang(lang, 'Select language:')}&nbsp; */}
+                            <select id = "selLanguage" onChange = {handleChange} value = {lang}>
+                                <option value = "en">English</option>
+                                <option value = "pl">Polski</option>
+                            </select>
+                        </span>    
                     </form>
-                    <span>{setLang(lang, 'Select language:')}&nbsp;
-                        <select id = "selLanguage" onChange = {handleChange} value = {lang}>
-                            <option value = "en">English</option>
-                            <option value = "pl">Polski</option>
-                        </select>
-                    </span> 
+                     
                 </div>
                 
                 
@@ -125,27 +131,46 @@ export const ChoiceMenu = forwardRef((_, refForm) => {
                             {contentColor} &#9660;
                         </span>
                         <form className = "formColor" onSubmit = {handleColorSubmit} ref = {refForm}>
-                                <label>
+                                {/* <label>
                                     <input type = "checkbox" value = "transparent" onChange = {handleChecked}
                                       checked = {colorSelect.some(val => val === "transparent")}/>
                                     &nbsp;{setLang(lang, 'Transparent')}
-                                </label>
-                                <label>
+                                </label> */}
+                                <FormControlLabel 
+                                    control = {<Checkbox value = 'transparent' onChange = {handleChecked}
+                                        checked = {colorSelect.some(val => val === "transparent")}
+                                        color = 'primary'
+                                        />}
+                                    label = {setLang(lang, 'Transparent')}
+                                />
+                                {/* <label>
                                     <input type = "checkbox" value = "grayscale" onChange = {ev => {
-                                        const isChecked = ev.target.checked;
                                          handleChecked(ev);
-                                         if(isChecked) ev.target.parentNode.nextSibling.classList.add("hidden")
+                                         if(ev.target.checked) ev.target.parentNode.nextSibling.classList.add("hidden")
                                          else ev.target.parentNode.nextSibling.classList.remove("hidden");
                                         }} checked = {colorDisable}
                                      />
                                     &nbsp;{setLang(lang, 'Black & white')}
-                                </label>
+                                </label> */}
+                                <FormControlLabel control = {<Checkbox value = "grayscale" onChange = {ev => {
+                                        handleChecked(ev);
+                                        if(ev.target.checked) ev.target.parentNode.nextSibling.classList.add("hidden")
+                                        else ev.target.parentNode.nextSibling.classList.remove("hidden");
+                                        }} 
+                                        checked = {colorDisable}
+                                        color = 'primary'
+                                    />}
+                                    label = {setLang(lang, 'Black & white')}
+                                />
                                 <div className = "color-select">
                                     {colorMenu}
                                 </div>
                                 <GoButton>GO</GoButton>
                         </form>
                     </span>
+                    <Button variant = 'outlined' color = 'primary' onClick = {handleReset} size = 'small' disabled = {disabledFilters}>
+                        {setLang(lang, 'Reset all filters')}
+                    </Button>
                 </div>
             </div>
     );

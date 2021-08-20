@@ -29,7 +29,7 @@ export function ImagesShow(){
     
     // dispatch(resetStatus());
 
-    const handleMouseEnter = ev => ev.target.parentNode.nextSibling.style.opacity = '.6';
+    const handleMouseEnter = ev => ev.target.parentNode.nextSibling.style.opacity = '.7';
     const handleMouseLeave = ev => ev.target.parentNode.nextSibling.style.opacity = '0';
   
     if (!total) return(
@@ -46,12 +46,12 @@ export function ImagesShow(){
                 />
             </Link>      
             <div className = 'infoLine'>
-                <img src = '\PNG\like.png' alt = "likes"/>
+                <img src = '\PNG\thumb-up-outline.png' alt = "likes"/>
                     &nbsp;{value.likes}&nbsp;&nbsp;
                 <span>
-                    <img src = '\PNG\view.png' alt = "views"/>                   
+                    <img src = '\PNG\eye-outline.png' alt = "views"/>                   
                     <span>&nbsp;{value.views}</span>
-                </span>               
+                </span>         
             </div>  
         </div>
     ));

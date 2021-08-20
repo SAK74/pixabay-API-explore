@@ -6,7 +6,13 @@ import { selectImageById } from "./imagesSlice";
 import { Link } from "react-router-dom";
 import { DivIMGPage } from "./styledComp";
 import { setLang } from "./LANGUAGES/language";
-import { Button } from "@material-ui/core";
+import { Button, makeStyles } from "@material-ui/core";
+
+const useStyles = makeStyles(theme => ({
+    margin: {
+        marginLeft: theme.spacing(2)
+    }
+}));
 
 export const  PageIMG = ({match}) => {
     const {id} = match.params;
@@ -16,6 +22,7 @@ export const  PageIMG = ({match}) => {
     const {colors} = useSelector(state => state.fetch.params);
     const lang = useSelector(state => state.fetch.lang);
     const ref = useRef();
+    const classes = useStyles();
 
     const isTransparent = colors.split(",").some(val => val === "transparent");
     const handleSearchClick = ev => {
@@ -38,11 +45,10 @@ export const  PageIMG = ({match}) => {
     return(
         <>
             <nav>
-                <Link className = 'navi-button' to = "/">
-                    <Button color = 'primary' variant = 'outlined'>
+                    <Button color = 'primary' variant = 'outlined' component = {Link} to = '/'
+                      className = {classes.margin}> 
                         &#10094; &#10094; &#10094; {setLang(lang, 'Return to search')}
                     </Button>
-                </Link>
             </nav>
             <div className = 'bigIMG_container'>
                 <div className = "big-img" onMouseEnter = {handleMouseEnter} onMouseLeave = {handleMOuseLeave}>
@@ -52,8 +58,8 @@ export const  PageIMG = ({match}) => {
                             {tags}
                         </span>
                         <span className = 'right'>
-                            <img src = '/PNG/view.png' alt = "eye"/>&nbsp;{image.views}&nbsp;&nbsp;
-                            <img src = '/PNG/like.png' alt = "like"/>&nbsp;{image.likes}
+                            <img src = '\PNG\eye-outline.png' alt = "eye"/>&nbsp;{image.views}&nbsp;&nbsp;
+                            <img src = '\PNG\thumb-up-outline.png' alt = "like"/>&nbsp;{image.likes}
                         </span>
                     </DivIMGPage>
                 </div>

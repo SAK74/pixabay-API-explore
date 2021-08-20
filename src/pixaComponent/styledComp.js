@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Label = styled.label`
     background: ${({value}) => value === "lilac" ? 'purple' : value};
-    cursor: ${({disabled}) => disabled ? 'not-allowed' : 'default'};
+    cursor: ${({disabled}) => disabled ? 'not-allowed' : 'pointer'};
     border: ${({checked}) => checked ? '2px solid #6f6f6f' : 'none'};
     height: 25px;
     width: 25px;
@@ -57,6 +57,7 @@ export const GoButton = styled.button.attrs(() => ({type: "submit"}))`
     width: 57%;
     height: 30px;
     border-radius: 20px;
+    cursor: pointer;
 `;
 
 export const DivIMGPage = styled.div`
@@ -70,6 +71,7 @@ export const DivIMGPage = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background-image: linear-gradient( rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 60%,rgba(0,0,0,0) 100%);background-image: linear-gradient( rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 60%,rgba(0,0,0,0) 100%);
 
     & .tag {
         margin-left: 4px;
@@ -88,7 +90,6 @@ export const DivIMGPage = styled.div`
         img {
             width: 25px;
             height: 25px;
-            background-color: white;
         }
     }
 `;
