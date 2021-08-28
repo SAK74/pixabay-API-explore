@@ -58,6 +58,7 @@ export const GoButton = styled.button.attrs(() => ({type: "submit"}))`
     height: 30px;
     border-radius: 20px;
     cursor: pointer;
+    margin: 5px
 `;
 
 export const DivIMGPage = styled.div`

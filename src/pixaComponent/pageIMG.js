@@ -6,7 +6,7 @@ import { selectImageById } from "./imagesSlice";
 import { Link } from "react-router-dom";
 import { DivIMGPage } from "./styledComp";
 import { setLang } from "./LANGUAGES/language";
-import { Button, makeStyles } from "@material-ui/core";
+import { Fab, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
     margin: {
@@ -45,10 +45,10 @@ export const  PageIMG = ({match}) => {
     return(
         <>
             <nav>
-                    <Button color = 'primary' variant = 'outlined' component = {Link} to = '/'
+                    <Fab color = 'default' variant = 'extended' size = 'small' component = {Link} to = '/'
                       className = {classes.margin}> 
                         &#10094; &#10094; &#10094; {setLang(lang, 'Return to search')}
-                    </Button>
+                    </Fab>
             </nav>
             <div className = 'bigIMG_container'>
                 <div className = "big-img" onMouseEnter = {handleMouseEnter} onMouseLeave = {handleMOuseLeave}>

@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { changeCategory, changeImagetype, changeOrientation, changeSearch, reset, changeColor, changeLanguage } from "./fetchSlice";
 import { ColorLabel, GoButton, Span } from "./styledComp";
 import { setLang } from "./LANGUAGES/language";
-import { Button, FormControlLabel, Checkbox } from "@material-ui/core";
+import { FormControlLabel, Checkbox, Input, Fab } from "@material-ui/core";
 import TranslateIcon from '@material-ui/icons/Translate';
+import { withStyles } from "@material-ui/styles";
 
 export const ChoiceMenu = forwardRef((_, refForm) => {
     
@@ -38,7 +39,7 @@ export const ChoiceMenu = forwardRef((_, refForm) => {
             colorSet = "grayscale";
             if (colorSelect.some(val => val === "transparent")) colorSet += ",transparent";
         }else colorSet = colorSelect.join(",");
-        console.log(colorSet);
+        // console.log(colorSet);
         refForm.current.classList.remove("visible");
         dispatch(changeColor(colorSet));
     }
@@ -91,8 +92,12 @@ export const ChoiceMenu = forwardRef((_, refForm) => {
                     <form onSubmit = {handleSubmit}>
                         <div>
                             <img onClick = {handleSubmit} src = "\PNG\search.png" alt = "search"/>
-                            <input placeholder = {setLang(lang, "looking words")} onInput = {handleChange} id = "input" 
-                            value = {input} size = "12" autoComplete = 'off'/> 
+                            <Input onInput = {handleChange} id = "input"
+                                placeholder = {setLang(lang, "looking words")} value = {input}
+                                autoComplete = 'off' spellCheck = 'false' size = "12"
+                            />
+                            {/* <input placeholder = {setLang(lang, "looking words")} onInput = {handleChange} id = "input" 
+                            value = {input} size = "12" autoComplete = 'off'/>  */}
                         </div>
                         <span>
                             <TranslateIcon/>
@@ -106,9 +111,10 @@ export const ChoiceMenu = forwardRef((_, refForm) => {
                      
                 </div>
                 
-                
                 <div className = "options">
-                    <select onChange = {handleChange} value = {imageType}  id = "imageType">
+                   
+                    <select onChange = {handleChange}   id = "imageType"
+                      value = 'photo'>
                         <option value = 'all'>{setLang(lang, 'Image type (all)')}</option>
                         <option value = 'photo'>{setLang(lang, 'photto')}</option>
                         <option value = 'illustration'>{setLang(lang, 'illustration')}</option>
@@ -137,9 +143,9 @@ export const ChoiceMenu = forwardRef((_, refForm) => {
                                     &nbsp;{setLang(lang, 'Transparent')}
                                 </label> */}
                                 <FormControlLabel 
-                                    control = {<Checkbox value = 'transparent' onChange = {handleChecked}
+                                    control = {<WhiteLabel value = 'transparent' onChange = {handleChecked}
                                         checked = {colorSelect.some(val => val === "transparent")}
-                                        color = 'primary'
+                                        size = 'small'
                                         />}
                                     label = {setLang(lang, 'Transparent')}
                                 />
@@ -152,13 +158,13 @@ export const ChoiceMenu = forwardRef((_, refForm) => {
                                      />
                                     &nbsp;{setLang(lang, 'Black & white')}
                                 </label> */}
-                                <FormControlLabel control = {<Checkbox value = "grayscale" onChange = {ev => {
+                                <FormControlLabel control = {<WhiteLabel value = "grayscale" onChange = {ev => {
                                         handleChecked(ev);
                                         if(ev.target.checked) ev.target.parentNode.nextSibling.classList.add("hidden")
                                         else ev.target.parentNode.nextSibling.classList.remove("hidden");
                                         }} 
                                         checked = {colorDisable}
-                                        color = 'primary'
+                                        size = 'small'
                                     />}
                                     label = {setLang(lang, 'Black & white')}
                                 />
@@ -168,10 +174,21 @@ export const ChoiceMenu = forwardRef((_, refForm) => {
                                 <GoButton>GO</GoButton>
                         </form>
                     </span>
-                    <Button variant = 'outlined' color = 'primary' onClick = {handleReset} size = 'small' disabled = {disabledFilters}>
+                    <Fab variant = 'extended' color = 'default' onClick = {handleReset} size = 'small'
+                        disabled = {disabledFilters}>
                         {setLang(lang, 'Reset all filters')}
-                    </Button>
+                    </Fab>
                 </div>
             </div>
     );
 });
+
+const WhiteLabel = withStyles({
+    root: {
+        color: 'aliceblue',
+        '&$checked': {
+            color: 'aliceblue'
+        }
+    },
+    checked: {}
+})(props => <Checkbox {...props}/>);
