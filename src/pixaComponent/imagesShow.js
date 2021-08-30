@@ -5,6 +5,9 @@ import { selectAllImages } from "./imagesSlice";
 import { sendFetch } from "./imagesSlice";
 import { changePage, resetPage } from "./fetchSlice";
 import { setLang } from "./LANGUAGES/language";
+import {ArrowUpward, FirstPage, LastPage, NavigateBefore, NavigateNext} from '@material-ui/icons';
+import { ScrollUp, SpanPerPage } from "./styledComp";
+import { Button, withStyles } from "@material-ui/core";
 
 export function ImagesShow(){
 
@@ -23,6 +26,8 @@ export function ImagesShow(){
         if (status === "iddle") dispatch(sendFetch(perPage));
         // eslint-disable-next-line
     }, [perPage, newSearch]);
+
+    const [visibleUp, setVisibleUp] = useState();
 
     if (status === "loading") return <div>Loading...</div>
     else if (status === "failed") return <h2>{error}</h2>;
@@ -57,35 +62,56 @@ export function ImagesShow(){
     ));
 
     const pages = (total%perPage) ? Math.floor(total/perPage)+1 : total/perPage;
-    const styledSpan = id => id === perPage ? {color:'red', fontWeight: "bold", fontSize: '1.2em'} : null;
     const changePerPage = ev => setPerpage(Number(ev.target.innerText));
     const handePagePlus = () => {
         if (pages !== 1 && page !== pages) dispatch(changePage(page + 1));
     }
+
+    window.onscroll = () => {
+        console.log('scroll: ', document.documentElement.scrollTop)
+        console.log(visibleUp);
+        if (document.documentElement.scrollTop > 300) {setVisibleUp("true")}
+        else setVisibleUp(undefined);
+    }
+    
     return (
         <>
             <div className = 'container'>
                 {renderedImages}
             </div>
             <div>&nbsp;&nbsp;{setLang(lang, "Matching")} <span style = {{fontWeight:'bold'}}>{total}</span> {setLang(lang, 'result(s)')}</div>
+            
+            <ScrollUp size = 'small' isvisible = {visibleUp} color = 'primary'
+              onClick = {() => document.documentElement.scrollTop = 0}>
+                <ArrowUpward/>
+            </ScrollUp>
+
             {total > 20 && <div className = "downLine">
                 <span>
                     &nbsp;{setLang(lang, 'Results in the page:')} 
                     <span className = 'pages' onClick = {changePerPage}>
-                        <span style = {styledSpan(20)}> 20 </span>
-                        <span style = {styledSpan(40)}> 40 </span>
-                        <span style = {styledSpan(60)}> 60 </span>
+                        <NaviButton component = {SpanPerPage} active = {perPage === 20}>20</NaviButton>
+                        <NaviButton component = {SpanPerPage} active = {perPage === 40}>40</NaviButton>
+                        <NaviButton component = {SpanPerPage} active = {perPage === 60}>60</NaviButton>
                     </span> 
                 </span>
-                
+
                 <span className = 'navPages'>
-                    <button onClick = {() => dispatch(resetPage())}>{'<<'}</button>
-                    <button onClick = {() => dispatch(changePage(page===1 ? 1 : page-1))}>{'<'}</button>
+                    <NaviButton disabled = {page === 1} onClick = {() => dispatch(resetPage())}><FirstPage/></NaviButton>
+                    <NaviButton disabled = {page === 1} onClick = {() => dispatch(changePage(page===1 ? 1 : page-1))}><NavigateBefore/></NaviButton>
                     <span> {setLang(lang, 'page')} {page} / {pages}</span>
-                    <button onClick = {handePagePlus}>{'>'}</button>
-                    <button onClick = {() => dispatch(changePage(pages))}>{'>>'}</button>
+                    <NaviButton disabled = {page === pages} onClick = {handePagePlus}><NavigateNext/></NaviButton>
+                    <NaviButton disabled = {page === pages} onClick = {() => dispatch(changePage(pages))}><LastPage/></NaviButton>
                 </span>  
             </div>}
         </>
     );
 }
+
+const NaviButton = withStyles({
+    root: {
+        minWidth: '0',
+        maxWidth: '30px',
+        maxHeight: '50px'
+    }
+})(props => <Button {...props}/>);

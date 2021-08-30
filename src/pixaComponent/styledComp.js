@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Fab from '@material-ui/core/Fab';
 
 export const Label = styled.label`
     background: ${({value}) => value === "lilac" ? 'purple' : value};
@@ -93,4 +94,26 @@ export const DivIMGPage = styled.div`
             height: 25px;
         }
     }
+`;
+
+export const ScrollUp = styled(Fab)`
+    visibility: hidden;
+    position: fixed;
+    top: 70%;
+    right: 0;  
+    transition: .5s;
+    ${({isvisible}) => isvisible && 
+        `visibility: initial;
+        right: 15px;
+        `}
+`;
+
+export const SpanPerPage = styled.span`
+    font-size: 1em;
+    ${({active}) => active && `
+        color: red;
+        font-weight: bold;
+        font-size: 1.2em;
+        cursor: initial;
+    `}
 `;

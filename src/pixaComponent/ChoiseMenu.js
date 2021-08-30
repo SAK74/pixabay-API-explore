@@ -38,8 +38,7 @@ export const ChoiceMenu = forwardRef((_, refForm) => {
         if (colorSelect.some(val => val === "grayscale")) {
             colorSet = "grayscale";
             if (colorSelect.some(val => val === "transparent")) colorSet += ",transparent";
-        }else colorSet = colorSelect.join(",");
-        // console.log(colorSet);
+        } else colorSet = colorSelect.join(",");
         refForm.current.classList.remove("visible");
         dispatch(changeColor(colorSet));
     }
@@ -92,9 +91,9 @@ export const ChoiceMenu = forwardRef((_, refForm) => {
                     <form onSubmit = {handleSubmit}>
                         <div>
                             <img onClick = {handleSubmit} src = "\PNG\search.png" alt = "search"/>
-                            <Input onInput = {handleChange} id = "input"
+                            <Input onInput = {handleChange} id = "input" color = 'secondary'
                                 placeholder = {setLang(lang, "looking words")} value = {input}
-                                autoComplete = 'off' spellCheck = 'false' size = "12"
+                                autoComplete = 'off' inputProps = {{size: '15', spellCheck: false}}
                             />
                             {/* <input placeholder = {setLang(lang, "looking words")} onInput = {handleChange} id = "input" 
                             value = {input} size = "12" autoComplete = 'off'/>  */}

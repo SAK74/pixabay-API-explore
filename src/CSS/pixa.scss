@@ -33,9 +33,6 @@
         input{
             margin: 0 5px;
         }
-        span{
-            margin-right: 15px;
-        }
     }
 }
 
@@ -57,9 +54,6 @@
     visibility: visible !important;
 }
 .formColor{
-    // >*{
-    //     margin: 5px;
-    // }
     z-index: 999;
     display: flex;
     flex-direction: column;
@@ -108,7 +102,7 @@
 }
 
 .imgField {
-    height: 40vh;
+    height: 30vh;
     margin: 2px;
         img{
         width: 100%;
@@ -136,25 +130,25 @@
     }
 }
 
-.pages, .navPages button{
-    cursor: pointer;
+.pages{
+    display: inline-flex;
 }
+
 .navPages{
-    button:hover{
-        font-weight: bold;
-        color: #d45725;
-        box-shadow: #0a3d71 2px 2px 3px 0px;
-    }
     float: right;
+    display: inline-flex;
+    align-items: center;
+    *{
+        margin: 5px;
+    }
 }
-.navPages * {
-    margin: 5px;
-}
+
 .bigIMG_container{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
 }
+
 .big-img {
     position: relative;
     top: 20px;
@@ -162,12 +156,16 @@
         width: 100%;
     }
 }
+
 @media only screen and (max-width: 600px){
     .big-img{
         width: 100%;
     }
     .infoLine{
         opacity: .7;
+    }
+    .imgField{
+        height: 38vh;
     }
 }
 .author {
@@ -185,7 +183,10 @@ nav {
 }
 
 .downLine{
-    margin: 25px;
+    margin: 15px;
+    >:first-child * {
+        margin: 2px;
+    }
 }
 
 .MuiFormControlLabel-root{
