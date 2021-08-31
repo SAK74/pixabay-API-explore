@@ -100,7 +100,6 @@ export const ChoiceMenu = forwardRef((_, refForm) => {
                         </div>
                         <span>
                             <TranslateIcon/>
-                            {/* {setLang(lang, 'Select language:')}&nbsp; */}
                             <select id = "selLanguage" onChange = {handleChange} value = {lang}>
                                 <option value = "en">English</option>
                                 <option value = "pl">Polski</option>
@@ -113,7 +112,7 @@ export const ChoiceMenu = forwardRef((_, refForm) => {
                 <div className = "options">
                    
                     <select onChange = {handleChange}   id = "imageType"
-                      value = 'photo'>
+                      value = {imageType}>
                         <option value = 'all'>{setLang(lang, 'Image type (all)')}</option>
                         <option value = 'photo'>{setLang(lang, 'photto')}</option>
                         <option value = 'illustration'>{setLang(lang, 'illustration')}</option>

@@ -9,6 +9,8 @@ import {ArrowUpward, FirstPage, LastPage, NavigateBefore, NavigateNext} from '@m
 import { ScrollUp, SpanPerPage } from "./styledComp";
 import { Button, withStyles } from "@material-ui/core";
 
+import '../CSS/loader.css';
+
 export function ImagesShow(){
 
     const [perPage, setPerpage] = useState(20);
@@ -29,7 +31,7 @@ export function ImagesShow(){
 
     const [visibleUp, setVisibleUp] = useState();
 
-    if (status === "loading") return <div>Loading...</div>
+    if (status === "loading") return <div className = 'loader'>Loading...</div>
     else if (status === "failed") return <h2>{error}</h2>;
     
     // dispatch(resetStatus());
