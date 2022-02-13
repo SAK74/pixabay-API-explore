@@ -8,9 +8,9 @@ import TranslateIcon from '@material-ui/icons/Translate';
 import { withStyles } from "@material-ui/styles";
 
 export const ChoiceMenu = forwardRef((_, refForm) => {
-    
-    const {search, imageType, orientation, category, colors} = useSelector(state => state.fetch.params);
-    const {lang} = useSelector(state => state.fetch);
+
+    const { search, imageType, orientation, category, colors } = useSelector(state => state.fetch.params);
+    const { lang } = useSelector(state => state.fetch);
     const [input, setInput] = useState(search);
     const dispatch = useDispatch();
 
@@ -18,20 +18,20 @@ export const ChoiceMenu = forwardRef((_, refForm) => {
     const colorDisable = colorSelect.some(val => val === "grayscale");
 
     const handleChange = ev => {
-        switch (ev.target.id){
-            case 'imageType' : dispatch(changeImagetype(ev.target.value)); break;
-            case 'orientation' : dispatch(changeOrientation(ev.target.value)); break;
-            case 'category' : dispatch(changeCategory(ev.target.value)); break;
-            case 'input' : setInput(ev.target.value); break;
-            case 'selLanguage' : dispatch(changeLanguage(ev.target.value)); break;
-            default : throw new Error("NIeznany błąd...");
+        switch (ev.target.id) {
+            case 'imageType': dispatch(changeImagetype(ev.target.value)); break;
+            case 'orientation': dispatch(changeOrientation(ev.target.value)); break;
+            case 'category': dispatch(changeCategory(ev.target.value)); break;
+            case 'input': setInput(ev.target.value); break;
+            case 'selLanguage': dispatch(changeLanguage(ev.target.value)); break;
+            default: throw new Error("NIeznany błąd...");
         }
     }
     const handleSubmit = ev => {
         ev.preventDefault();
         dispatch(changeSearch(input));
     }
-    
+
     const handleColorSubmit = ev => {
         ev.preventDefault();
         let colorSet = "";
@@ -44,7 +44,7 @@ export const ChoiceMenu = forwardRef((_, refForm) => {
     }
 
     const handleChecked = (ev) => {
-        if(ev.target.checked){
+        if (ev.target.checked) {
             setColorSelect(prev => {
                 const temp = new Set(prev).add(ev.target.value);
                 return [...temp];
@@ -60,14 +60,14 @@ export const ChoiceMenu = forwardRef((_, refForm) => {
 
     const colorMenu = [];
     const color = ['red', 'orange', 'yellow', 'green', 'turquoise', 'blue', 'lilac', 'pink', 'white', 'gray', 'black', 'brown'];
-    for (let i = 0; i < color.length; i++){
+    for (let i = 0; i < color.length; i++) {
         const isSelected = colorSelect.some(val => val === color[i]);
-        colorMenu[i] = <ColorLabel key = {color[i]} value = {color[i]} disabled = {colorDisable}
-         checked = {isSelected} onChange = {handleChecked}/>;
+        colorMenu[i] = <ColorLabel key={color[i]} value={color[i]} disabled={colorDisable}
+            checked={isSelected} onChange={handleChecked} />;
     }
-    
-    const spanColor = colors.split(",").map(elem => !elem ? null : <Span key = {elem} color = {elem}></Span>);
-    const contentColor = (!colors) ? setLang(lang, 'Color') : <span className = "span-container">{spanColor}</span>;
+
+    const spanColor = colors.split(",").map(elem => !elem ? null : <Span key={elem} color={elem}></Span>);
+    const contentColor = (!colors) ? setLang(lang, 'Color') : <span className="span-container">{spanColor}</span>;
 
     const handleReset = () => {
         setColorSelect([]);
@@ -76,78 +76,78 @@ export const ChoiceMenu = forwardRef((_, refForm) => {
     }
 
     const categoriesList = ['backgrounds', 'fashion', 'nature', 'science', 'education', 'feelings', 'health',
-     'people', 'religion', 'places', 'animals', 'industry', 'computer', 'food', 'sports', 'transportation',
-      'travel', 'buildings', 'business', 'music'];
+        'people', 'religion', 'places', 'animals', 'industry', 'computer', 'food', 'sports', 'transportation',
+        'travel', 'buildings', 'business', 'music'];
     const categoriesOptions = [];
     for (let i = 0; i < categoriesList.length; i++) categoriesOptions.push(
-        <option key = {i} value = {categoriesList[i]}>{setLang(lang, categoriesList[i])}</option>
+        <option key={i} value={categoriesList[i]}>{setLang(lang, categoriesList[i])}</option>
     );
 
     const disabledFilters = Boolean([search, imageType, orientation, category, colors].join(',') === ",all,all,all,");
 
     return (
-            <div className = "header">
-                <div className = "header_1stLine">
-                    <form onSubmit = {handleSubmit}>
-                        <div>
-                            <img onClick = {handleSubmit} src = "\PNG\search.png" alt = "search"/>
-                            <Input onInput = {handleChange} id = "input" color = 'secondary'
-                                placeholder = {setLang(lang, "looking words")} value = {input}
-                                autoComplete = 'off' inputProps = {{size: '15', spellCheck: false}}
-                            />
-                            {/* <input placeholder = {setLang(lang, "looking words")} onInput = {handleChange} id = "input" 
+        <div className="header">
+            <div className="header_1stLine">
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <img onClick={handleSubmit} src="\PNG\search.png" alt="search" />
+                        <Input onInput={handleChange} id="input" color='secondary'
+                            placeholder={setLang(lang, "looking words")} value={input}
+                            autoComplete='off' inputProps={{ size: '15', spellCheck: false }}
+                        />
+                        {/* <input placeholder = {setLang(lang, "looking words")} onInput = {handleChange} id = "input" 
                             value = {input} size = "12" autoComplete = 'off'/>  */}
-                        </div>
-                        <span>
-                            <TranslateIcon/>
-                            <select id = "selLanguage" onChange = {handleChange} value = {lang}>
-                                <option value = "en">English</option>
-                                <option value = "pl">Polski</option>
-                            </select>
-                        </span>    
-                    </form>
-                     
-                </div>
-                
-                <div className = "options">
-                   
-                    <select onChange = {handleChange}   id = "imageType"
-                      value = {imageType}>
-                        <option value = 'all'>{setLang(lang, 'Image type (all)')}</option>
-                        <option value = 'photo'>{setLang(lang, 'photto')}</option>
-                        <option value = 'illustration'>{setLang(lang, 'illustration')}</option>
-                        <option value = 'vector'>{setLang(lang, 'vector')}</option>
-                    </select>
-                    
-                    <select onChange = {handleChange} id = "orientation" value = {orientation}>
-                        <option value = 'all'>{setLang(lang, 'Orientation (all)')}</option>
-                        <option value = 'horizontal'>{setLang(lang, 'horizontal')}</option>
-                        <option value = 'vertical'>{setLang(lang, 'vertical')}</option>
-                    </select>
+                    </div>
+                    <span>
+                        <TranslateIcon />
+                        <select id="selLanguage" onChange={handleChange} value={lang}>
+                            <option value="en">English</option>
+                            <option value="pl">Polski</option>
+                        </select>
+                    </span>
+                </form>
 
-                    <select onChange = {handleChange} id = "category" value = {category}>
-                        <option value = 'all'>{setLang(lang, 'Category (all)')}</option>
-                        {categoriesOptions}
-                    </select>
+            </div>
 
-                    <span className = "color-container">
-                        <span onClick = {(ev) => {ev.stopPropagation(); refForm.current.classList.toggle("visible")}}>
-                            {contentColor} &#9660;
-                        </span>
-                        <form className = "formColor" onSubmit = {handleColorSubmit} ref = {refForm}>
-                                {/* <label>
+            <div className="options">
+
+                <select onChange={handleChange} id="imageType"
+                    value={imageType}>
+                    <option value='all'>{setLang(lang, 'Image type (all)')}</option>
+                    <option value='photo'>{setLang(lang, 'photto')}</option>
+                    <option value='illustration'>{setLang(lang, 'illustration')}</option>
+                    <option value='vector'>{setLang(lang, 'vector')}</option>
+                </select>
+
+                <select onChange={handleChange} id="orientation" value={orientation}>
+                    <option value='all'>{setLang(lang, 'Orientation (all)')}</option>
+                    <option value='horizontal'>{setLang(lang, 'horizontal')}</option>
+                    <option value='vertical'>{setLang(lang, 'vertical')}</option>
+                </select>
+
+                <select onChange={handleChange} id="category" value={category}>
+                    <option value='all'>{setLang(lang, 'Category (all)')}</option>
+                    {categoriesOptions}
+                </select>
+
+                <span className="color-container">
+                    <span onClick={(ev) => { ev.stopPropagation(); refForm.current.classList.toggle("visible") }}>
+                        {contentColor} &#9660;
+                    </span>
+                    <form className="formColor" onSubmit={handleColorSubmit} ref={refForm}>
+                        {/* <label>
                                     <input type = "checkbox" value = "transparent" onChange = {handleChecked}
                                       checked = {colorSelect.some(val => val === "transparent")}/>
                                     &nbsp;{setLang(lang, 'Transparent')}
                                 </label> */}
-                                <FormControlLabel 
-                                    control = {<WhiteLabel value = 'transparent' onChange = {handleChecked}
-                                        checked = {colorSelect.some(val => val === "transparent")}
-                                        size = 'small'
-                                        />}
-                                    label = {setLang(lang, 'Transparent')}
-                                />
-                                {/* <label>
+                        <FormControlLabel
+                            control={<WhiteLabel value='transparent' onChange={handleChecked}
+                                checked={colorSelect.some(val => val === "transparent")}
+                                size='small'
+                            />}
+                            label={setLang(lang, 'Transparent')}
+                        />
+                        {/* <label>
                                     <input type = "checkbox" value = "grayscale" onChange = {ev => {
                                          handleChecked(ev);
                                          if(ev.target.checked) ev.target.parentNode.nextSibling.classList.add("hidden")
@@ -156,28 +156,28 @@ export const ChoiceMenu = forwardRef((_, refForm) => {
                                      />
                                     &nbsp;{setLang(lang, 'Black & white')}
                                 </label> */}
-                                <FormControlLabel control = {<WhiteLabel value = "grayscale" onChange = {ev => {
-                                        handleChecked(ev);
-                                        if(ev.target.checked) ev.target.parentNode.nextSibling.classList.add("hidden")
-                                        else ev.target.parentNode.nextSibling.classList.remove("hidden");
-                                        }} 
-                                        checked = {colorDisable}
-                                        size = 'small'
-                                    />}
-                                    label = {setLang(lang, 'Black & white')}
-                                />
-                                <div className = "color-select">
-                                    {colorMenu}
-                                </div>
-                                <GoButton>GO</GoButton>
-                        </form>
-                    </span>
-                    <Fab variant = 'extended' color = 'default' onClick = {handleReset} size = 'small'
-                        disabled = {disabledFilters}>
-                        {setLang(lang, 'Reset all filters')}
-                    </Fab>
-                </div>
+                        <FormControlLabel control={<WhiteLabel value="grayscale" onChange={ev => {
+                            handleChecked(ev);
+                            if (ev.target.checked) ev.target.parentNode.nextSibling.classList.add("hidden")
+                            else ev.target.parentNode.nextSibling.classList.remove("hidden");
+                        }}
+                            checked={colorDisable}
+                            size='small'
+                        />}
+                            label={setLang(lang, 'Black & white')}
+                        />
+                        <div className="color-select">
+                            {colorMenu}
+                        </div>
+                        <GoButton>GO</GoButton>
+                    </form>
+                </span>
+                <Fab variant='extended' color='default' onClick={handleReset} size='small'
+                    disabled={disabledFilters}>
+                    {setLang(lang, 'Reset all filters')}
+                </Fab>
             </div>
+        </div>
     );
 });
 
@@ -189,4 +189,4 @@ const WhiteLabel = withStyles({
         }
     },
     checked: {}
-})(props => <Checkbox {...props}/>);
+})(props => <Checkbox {...props} />);

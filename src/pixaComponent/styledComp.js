@@ -2,25 +2,25 @@ import styled from 'styled-components';
 import Fab from '@material-ui/core/Fab';
 
 export const Label = styled.label`
-    background: ${({value}) => value === "lilac" ? 'purple' : value};
-    cursor: ${({disabled}) => disabled ? 'not-allowed' : 'pointer'};
-    border: ${({checked}) => checked ? '2px solid #6f6f6f' : 'none'};
+    background: ${({ value }) => value === "lilac" ? 'purple' : value};
+    cursor: ${({ disabled }) => disabled ? 'not-allowed' : 'pointer'};
+    border: ${({ checked }) => checked ? '2px solid #6f6f6f' : 'none'};
     height: 25px;
     width: 25px;
     border-radius: 50%;
     position: relative;
     overflow: hidden;    
-    ${({disabled}) => disabled && `
+    ${({ disabled }) => disabled && `
         opacity: .3;
     `}
 `;
 
-const Input = styled.input.attrs(() => ({type: "checkbox"}))`
+const Input = styled.input.attrs(() => ({ type: "checkbox" }))`
     left: -35px;
     position: absolute;
 
     &:after{
-        ${({checked, disabled}) => checked && `
+        ${({ checked, disabled }) => checked && `
             content: "";
             border-radius: 50%;
             width: 17px;
@@ -35,11 +35,11 @@ const Input = styled.input.attrs(() => ({type: "checkbox"}))`
 `;
 
 export const ColorLabel = props => <Label {...props}>
-    <Input {...props}/>
+    <Input {...props} />
 </Label>;
 
 export const Span = styled.span`
-    background-color: ${({color}) => color === "lilac" ? 'purple' : color};
+    background-color: ${({ color }) => color === "lilac" ? 'purple' : color};
     position: relative;
     width: 15px;
     height: 15px;
@@ -54,7 +54,7 @@ export const Span = styled.span`
     }
 `;
 
-export const GoButton = styled.button.attrs(() => ({type: "submit"}))`
+export const GoButton = styled.button.attrs(() => ({ type: "submit" }))`
     width: 57%;
     height: 30px;
     border-radius: 20px;
@@ -63,7 +63,7 @@ export const GoButton = styled.button.attrs(() => ({type: "submit"}))`
 `;
 
 export const DivIMGPage = styled.div`
-    color: ${({transparent}) => transparent ? 'initial' : "white"};
+    color: ${({ transparent }) => transparent ? 'initial' : "white"};
     position: absolute;
     opacity: 0.8;
     top: 0;
@@ -102,7 +102,7 @@ export const ScrollUp = styled(Fab)`
     top: 70%;
     right: 0;  
     transition: .5s;
-    ${({isvisible}) => isvisible && 
+    ${({ isvisible }) => isvisible &&
         `visibility: initial;
         right: 15px;
         `}
@@ -110,7 +110,7 @@ export const ScrollUp = styled(Fab)`
 
 export const SpanPerPage = styled.span`
     font-size: 1em;
-    ${({active}) => active && `
+    ${({ active }) => active && `
         color: red;
         font-weight: bold;
         font-size: 1.2em;

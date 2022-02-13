@@ -1,13 +1,13 @@
 import { createAsyncThunk, createEntityAdapter, createSlice } from "@reduxjs/toolkit";
 
-export const sendFetch = createAsyncThunk('sendFetch', async (perPage, {getState}) => {
-    const KEY = '<TYPE THE PRIVATE KEY ACCESSED BY PIXABAY !!! >';
-    const {search, imageType, orientation, category, page, colors} = getState().fetch.params;
+export const sendFetch = createAsyncThunk('sendFetch', async (perPage, { getState }) => {
+    const KEY = process.env.REACT_APP_API_KEY;
+    const { search, imageType, orientation, category, page, colors } = getState().fetch.params;
     const lang = getState().fetch.lang;
-    const resp = await fetch(`https://pixabay.com/api/?key=${KEY}&page=${page}${search?'&q='+search:''}&per_page=${perPage}&image_type=${imageType}&orientation=${orientation}&category=${category}&colors=${colors}&lang=${lang}`);
-    console.log(resp);
+    const resp = await fetch(`https://pixabay.com/api/?key=${KEY}&page=${page}${search ? '&q=' + search : ''}&per_page=${perPage}&image_type=${imageType}&orientation=${orientation}&category=${category}&colors=${colors}&lang=${lang}`);
+    // console.log(resp);
     if (!resp.ok) throw new Error("Error... " + resp.status + resp.statusText);
-    return await resp.json();
+    return resp.json();
 });
 
 const imagesAdapter = createEntityAdapter();
@@ -21,10 +21,10 @@ const imagesSlice = createSlice({
     name: "images",
     initialState,
     reducers: {
-        resetStatus: state => {state.status = "iddle"}
+        resetStatus: state => { state.status = "iddle" }
     },
     extraReducers: {
-        [sendFetch.pending]: state => {state.status = "loading"},
+        [sendFetch.pending]: state => { state.status = "loading" },
         [sendFetch.fulfilled]: (state, action) => {
             state.status = "iddle";
             state.total = action.payload.totalHits;
