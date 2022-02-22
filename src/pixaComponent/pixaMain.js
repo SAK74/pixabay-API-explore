@@ -4,7 +4,6 @@ import { PageIMG } from "./pageIMG";
 import '../CSS/pixa.scss';
 import { ImagesShow } from "./imagesShow";
 import { createRef } from "react";
-// import { Temp } from "./temp";
 
 const Main = () => {
     const refToDropDown = createRef();
@@ -15,7 +14,6 @@ const Main = () => {
                     <div onClick={(ev) => {
                         if (!refToDropDown.current.contains(ev.target)) refToDropDown.current.classList.remove("visible")
                     }}>
-                        {/* <Temp/> */}
                         <ChoiceMenu ref={refToDropDown} />
                         <ImagesShow />
                     </div>

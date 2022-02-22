@@ -4,10 +4,7 @@ const progressSlice = createSlice({
    name: "progress",
    initialState: 0,
    reducers: {
-      incValue: (state, { payload }) => {
-         state = payload;
-         console.log('progress:', state);
-      },
+      incValue: (state, { payload }) => payload,
    }
 });
 

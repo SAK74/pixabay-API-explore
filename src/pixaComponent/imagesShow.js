@@ -7,7 +7,7 @@ import { changePage, resetPage } from "./fetchSlice";
 import { setLang } from "./LANGUAGES/language";
 import { ArrowUpward, FirstPage, LastPage, NavigateBefore, NavigateNext } from '@material-ui/icons';
 import { ScrollUp, SpanPerPage } from "./styledComp";
-import { Button, withStyles } from "@material-ui/core";
+import { Button, LinearProgress, withStyles } from "@material-ui/core";
 
 import '../CSS/loader.css';
 
@@ -17,8 +17,8 @@ export function ImagesShow() {
     const dispatch = useDispatch();
     const { total, status, error } = useSelector(state => state.images);
     const hits = useSelector(selectAllImages);
-
-    console.log(hits, status, error);
+    const progress = useSelector(state => state.progress);
+    // console.log(hits, status, error);
 
     const newSearch = useSelector(state => state.fetch.params);
     const { lang } = useSelector(state => state.fetch);
@@ -31,10 +31,13 @@ export function ImagesShow() {
 
     const [visibleUp, setVisibleUp] = useState();
 
-    if (status === "loading") { return <div className='loader'>Loading...</div> }
+    if (status === "loading") {
+        return <div>
+            <LinearProgress variant="determinate" value={progress} />
+            <div className='loader'>Loading...</div>
+        </div>
+    }
     else if (status === "failed") { return <h2>{error}</h2> };
-
-    // dispatch(resetStatus());
 
     const handleMouseEnter = ev => ev.target.parentNode.nextSibling.style.opacity = '.7';
     const handleMouseLeave = ev => ev.target.parentNode.nextSibling.style.opacity = '0';

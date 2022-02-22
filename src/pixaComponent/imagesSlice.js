@@ -6,28 +6,10 @@ import {
 import axios from "axios";
 import { incValue } from "./progressSlice";
 
-const downloadProgress = progressEvent => dispatch => {
-  console.log(dispatch);
-  console.log(progressEvent);
-  dispatch(incValue(20));
-  const { loaded, total } = progressEvent;
-  const current = loaded / total * 100;
-  const delta = 10;
-  let prev = 0;
-  // if (current >= prev + delta) {
-  //   console.log(current);
-  //   dispatch(incValue(current));
-  //   prev = current;
-  // }
-
-}
-
 export const sendFetch = createAsyncThunk(
   "sendFetch",
   (perPage, { getState, dispatch }) => {
-    console.log(process.env);
-    // console.log(dispatch);
-    console.log('getState: ', getState());
+    dispatch(incValue(0));
     const {
       search,
       imageType,
@@ -49,7 +31,15 @@ export const sendFetch = createAsyncThunk(
         colors,
         lang
       },
-      onDownloadProgress: downloadProgress(dispatch)
+      onDownloadProgress: ({ loaded, total }) => {
+        const current = loaded / total * 100;
+        const delta = 10;
+        let prev = 0;
+        if (current >= prev + delta) {
+          dispatch(incValue(current));
+          prev = current;
+        }
+      }
     })
       .then((resp) => resp.data)
       .catch((err) => {
