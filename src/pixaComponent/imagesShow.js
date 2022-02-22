@@ -5,25 +5,22 @@ import { selectAllImages } from "./imagesSlice";
 import { sendFetch } from "./imagesSlice";
 import { changePage, resetPage } from "./fetchSlice";
 import { setLang } from "./LANGUAGES/language";
-import { ArrowUpward, FirstPage, LastPage, NavigateBefore, NavigateNext } from '@material-ui/icons';
+import { ArrowUpward, FirstPage, LastPage, NavigateBefore, NavigateNext } from '@mui/icons-material';
 import { ScrollUp, SpanPerPage } from "./styledComp";
-import { Button, LinearProgress, withStyles } from "@material-ui/core";
-
+import { Button, LinearProgress } from "@mui/material";
+import { withStyles } from '@mui/styles';
 import '../CSS/loader.css';
 
 export function ImagesShow() {
-
     const [perPage, setPerpage] = useState(20);
     const dispatch = useDispatch();
     const { total, status, error } = useSelector(state => state.images);
     const hits = useSelector(selectAllImages);
     const progress = useSelector(state => state.progress);
     // console.log(hits, status, error);
-
     const newSearch = useSelector(state => state.fetch.params);
     const { lang } = useSelector(state => state.fetch);
     const { page } = newSearch;
-
     useEffect(() => {
         if (status === "iddle") dispatch(sendFetch(perPage));
         // eslint-disable-next-line
@@ -82,8 +79,11 @@ export function ImagesShow() {
             <div className='container'>
                 {renderedImages}
             </div>
-            <div>&nbsp;&nbsp;{setLang(lang, "Matching")} <span style={{ fontWeight: 'bold' }}>{total}</span> {setLang(lang, 'result(s)')}</div>
-
+            <div>
+                &nbsp;&nbsp;{setLang(lang, "Matching")}
+                <span style={{ fontWeight: 'bold' }}>{total}</span>
+                {setLang(lang, 'result(s)')}
+            </div>
             <ScrollUp size='small' isvisible={visibleUp} color='primary'
                 onClick={() => document.documentElement.scrollTop = 0}>
                 <ArrowUpward />
@@ -98,7 +98,6 @@ export function ImagesShow() {
                         <NaviButton component={SpanPerPage} active={perPage === 60}>60</NaviButton>
                     </span>
                 </span>
-
                 <span className='navPages'>
                     <NaviButton disabled={page === 1} onClick={() => dispatch(resetPage())}><FirstPage /></NaviButton>
                     <NaviButton disabled={page === 1} onClick={() => dispatch(changePage(page === 1 ? 1 : page - 1))}><NavigateBefore /></NaviButton>

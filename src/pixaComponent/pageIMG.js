@@ -6,14 +6,14 @@ import { selectImageById } from "./imagesSlice";
 import { Link } from "react-router-dom";
 import { DivIMGPage } from "./styledComp";
 import { setLang } from "./LANGUAGES/language";
-import { Fab, makeStyles } from "@material-ui/core";
-import Skeleton from '@material-ui/lab/Skeleton';
+import { Fab, Skeleton } from "@mui/material";
+import { makeStyles } from '@mui/styles';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
     margin: {
-        marginLeft: theme.spacing(2)
+        marginLeft: 15
     }
-}));
+});
 
 export const PageIMG = ({ match }) => {
     const { id } = match.params;
@@ -34,7 +34,6 @@ export const PageIMG = ({ match }) => {
     const handleMOuseLeave = () => ref.current.style.opacity = "0";
 
     let tags;
-
     if (!image) {
         history.push('/');
         return null;
@@ -65,7 +64,6 @@ export const PageIMG = ({ match }) => {
                         </span>
                     </DivIMGPage>
                 </div>
-
                 <div className="author">
                     <p>Author:</p>
                     <a href={`https://pixabay.com/users/${image.user}-${image.user_id}/`} target="_blank" rel="noreferrer">

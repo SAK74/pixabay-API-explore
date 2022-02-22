@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Fab from '@material-ui/core/Fab';
+import Fab from '@mui/material/Fab';
 
 export const Label = styled.label`
     background: ${({ value }) => value === "lilac" ? 'purple' : value};
