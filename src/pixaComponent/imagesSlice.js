@@ -4,11 +4,30 @@ import {
   createSlice
 } from "@reduxjs/toolkit";
 import axios from "axios";
+import { incValue } from "./progressSlice";
+
+const downloadProgress = progressEvent => dispatch => {
+  console.log(dispatch);
+  console.log(progressEvent);
+  dispatch(incValue(20));
+  const { loaded, total } = progressEvent;
+  const current = loaded / total * 100;
+  const delta = 10;
+  let prev = 0;
+  // if (current >= prev + delta) {
+  //   console.log(current);
+  //   dispatch(incValue(current));
+  //   prev = current;
+  // }
+
+}
 
 export const sendFetch = createAsyncThunk(
   "sendFetch",
-  (perPage, { getState }) => {
-    // const KEY = process.env.REACT_APP_API_KEY;
+  (perPage, { getState, dispatch }) => {
+    console.log(process.env);
+    // console.log(dispatch);
+    console.log('getState: ', getState());
     const {
       search,
       imageType,
@@ -29,7 +48,8 @@ export const sendFetch = createAsyncThunk(
         category,
         colors,
         lang
-      }
+      },
+      onDownloadProgress: downloadProgress(dispatch)
     })
       .then((resp) => resp.data)
       .catch((err) => {
