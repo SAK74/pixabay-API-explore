@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { selectAllImages } from "./imagesSlice";
-import { sendFetch } from "./imagesSlice";
+import { fetchData } from '../FEATURES/fetchData';
 import { changePage, resetPage } from "./fetchSlice";
 import { setLang } from "./LANGUAGES/language";
 import { ArrowUpward, FirstPage, LastPage, NavigateBefore, NavigateNext } from '@mui/icons-material';
@@ -22,7 +22,7 @@ export function ImagesShow() {
     const { lang } = useSelector(state => state.fetch);
     const { page } = newSearch;
     useEffect(() => {
-        if (status === "iddle") dispatch(sendFetch(perPage));
+        if (status === "iddle") dispatch(fetchData(perPage));
         // eslint-disable-next-line
     }, [perPage, newSearch]);
 
